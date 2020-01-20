@@ -34,7 +34,6 @@ public class tablero {
     NuevoJuego nj;
     ArrayList<Integer> columnas=new ArrayList();
     ArrayList <Integer> filas= new ArrayList();
-
     public tablero(NuevoJuego nj, reglas r) {
         this.nj = nj;
         this.r=r;
@@ -62,12 +61,14 @@ public class tablero {
                         b=false;
                         System.out.println("cambio");
                         Carta c= (Carta) cartas.get(rd);
-                        ImageView imv=new ImageView(c.getImg());
+                         ImageView imv=new ImageView(c.getImg());
                         imv.setFitHeight(150);
                         imv.setFitWidth(100);
                         StackPane sp= new StackPane();
                         sp.getChildren().add(imv);
                         sp.setOnMouseClicked(e->ComprobarCarta(nj,c,imv,sp));
+                        tablero.setStyle("-fx-background-color: yellow, orange ; -fx-grid-lines-visible: true");
+                        
                         tablero.add(sp, i, j);
                         System.out.println(rd);
                         System.out.println("Numero pos :"+ i +", "+j);
@@ -108,6 +109,7 @@ public class tablero {
             ivequis.setFitWidth(50);
             sp.getChildren().clear();
             sp.getChildren().addAll(imgv,ivequis);
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -186,4 +188,6 @@ public class tablero {
         }
         return comp;
     }
+
+   
 }

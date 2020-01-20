@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ventanas.Configuracion;
 import ventanas.Griton;
@@ -41,7 +42,8 @@ public class LoteriaMexicana extends Application {
         nj.cargarDeck();
         
         //Scene scene = new Scene(cf.getBpane(), 800,500);
-        Scene scene = new Scene(nj.getBpNuevoJuego(), 1390,1200);
+        Scene scene = new Scene(nj.getBpNuevoJuego(), 1000,900);
+        scene.setFill(Color.AQUA);
         File f = new File("src/css/estilo.css");
         scene.getStylesheets().add("file:///"+f.getAbsolutePath().replace("\\","/"));
         scene.getStylesheets().add(getClass().getResource("").toExternalForm());
