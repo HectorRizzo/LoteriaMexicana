@@ -22,6 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import modelo.Carta;
+import modelo.EstadoCarta;
 
 /**
  *
@@ -29,10 +30,14 @@ import modelo.Carta;
  */
 public class tablero {
     GridPane tablero;
+    reglas r;
     NuevoJuego nj;
+    ArrayList<Integer> columnas=new ArrayList();
+    ArrayList <Integer> filas= new ArrayList();
 
-    public tablero(NuevoJuego nj) {
+    public tablero(NuevoJuego nj, reglas r) {
         this.nj = nj;
+        this.r=r;
     }
     
     
@@ -48,7 +53,6 @@ public class tablero {
         int lenX= 4;
         int lenY=4;
         Set <Integer> contenedo= new HashSet();
-        ArrayList<Integer> contenedor=new ArrayList();
         for(int i=1;i<=lenX;i++){
             for(int j=1; j<=lenY;j++){
                 boolean b=true;
@@ -112,11 +116,61 @@ public class tablero {
         
     }
 
-    private void ComprobarCarta(NuevoJuego nj,Carta c,ImageView imv, StackPane sp) {
+    private void ComprobarCarta(NuevoJuego nj,Carta c,ImageView imv, StackPane sp) 
+    
+    {
+        System.out.println(c.getEstado()==EstadoCarta.JUGADO);
         if(nj.getGt().getId().equals(c.getId())){
-        PonerBean(imv,sp);
+            if(c.getEstado()==EstadoCarta.JUGADO){
+                
+            }else{
+                PonerBean(imv,sp);
+                System.out.println(tablero.getColumnIndex(sp));
+                columnas.add(tablero.getColumnIndex(sp));
+                filas.add(tablero.getRowIndex(sp));
+                
+        c.setEstado(EstadoCarta.JUGADO);
+            }
+        
         }else{
-            PonerX(imv,sp);
+            if(c.getEstado()==EstadoCarta.JUGADO){
+                
+            }else{
+                PonerX(imv,sp);
+            }
         }
+    }
+
+    public ArrayList<Integer> getColumnas() {
+        return columnas;
+    }
+
+    public ArrayList<Integer> getFilas() {
+        return filas;
+    }
+
+    public boolean comprobartablero(reglas r){
+        boolean comp=false;
+        int idregla=r.getIdRule();
+        TreeMap <Integer,Integer> acumulador= new TreeMap();
+        Set <Integer> contadorFC= new HashSet();
+        switch(idregla){
+            case 1:
+                for(Integer i:columnas){
+                    if(contadorFC.add(i)){
+                        contadorFC.add(i);
+                        acumulador.put(i,1);
+                    }else{
+                        int valor=acumulador.get(i);
+                        acumulador.put(i,++valor);
+                        if(valor==4){
+                            comp=true;
+                        }
+                    }
+                }
+                
+                
+        }
+        return comp;
     }
 }

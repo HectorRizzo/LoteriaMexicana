@@ -17,11 +17,14 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import modelo.Carta;
 
@@ -33,9 +36,13 @@ public class NuevoJuego {
     TreeMap <Integer,Carta> cartas=new TreeMap<Integer,Carta>();
     BorderPane bpNuevoJuego= new BorderPane();
     tablero t;
+    reglas r;
     Griton gt;
-    VBox reglas;
+    VBox vbright= new VBox ();
+    StackPane sploteria= new StackPane();
     ArrayList<Image> imagenes;
+    ArrayList <Integer> columnasTablero;
+    ArrayList <Integer> filasTablero;
 
     public tablero getT() {
         return t;
@@ -45,9 +52,7 @@ public class NuevoJuego {
         return gt;
     }
 
-    public VBox getReglas() {
-        return reglas;
-    }
+    
 
     public ArrayList<Image> getImagenes() {
         return imagenes;
@@ -63,18 +68,41 @@ public class NuevoJuego {
     }
     
     public NuevoJuego() {
-        t= new tablero(this);
+        
+        r= new reglas();    
+        r.cargarRegla();
+        t= new tablero(this,r);
         cargarDeck();
         t.crearTablero(cartas);
         
         gt= new Griton(cartas);
         gt.getThread().setDaemon(true);
         gt.getThread().start();
+        cargarLoteria();
+        vbright.getChildren().addAll(gt.getGriton(),sploteria);
+        
         bpNuevoJuego.setCenter(t.getTablero());
-        bpNuevoJuego.setRight(gt.getGriton());
+        bpNuevoJuego.setRight(vbright);
+        bpNuevoJuego.setLeft(r.getVbreglas());
+        
 
     }
-
+    public void cargarLoteria(){
+        Image lot;
+        try {
+            lot = new Image(new FileInputStream("src/images/loteria.jpeg"));
+            ImageView ivlot=new ImageView(lot);
+            ivlot.setFitHeight(70);
+            ivlot.setFitWidth(200);
+            ivlot.setOnMouseClicked(e-> LoteriaClicked());
+            sploteria.getChildren().clear();
+            sploteria.setPadding(new Insets(50));
+            sploteria.getChildren().add(ivlot);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public TreeMap<Integer, Carta> getCartas() {
         return cartas;
     }
@@ -101,6 +129,16 @@ public class NuevoJuego {
         } catch (CsvException ex) {
             Logger.getLogger(NuevoJuego.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void LoteriaClicked() {
+        if(t.comprobartablero(r)){
+            Alert alert=new Alert(Alert.AlertType.WARNING);
+            alert.showAndWait();
+        }
+        /*columnasTablero=t.getColumnas();
+        filasTablero=t.getFilas();
+        */
     }
  
     

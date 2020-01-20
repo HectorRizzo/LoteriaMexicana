@@ -22,6 +22,18 @@ public class Carta {
         this.id = id;
     }
 
+    public void setImg(Image img) {
+        this.img = img;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setEstado(EstadoCarta estado) {
+        this.estado = estado;
+    }
+
     
     
     public Carta(Image img, String id, EstadoCarta estado) {

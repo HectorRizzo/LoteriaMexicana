@@ -31,7 +31,7 @@ public class Griton {
     TreeMap <Integer,Carta>tm;
     Timer timer = new Timer();
     ImageView iv;
-    Set <Integer> gen= new HashSet();
+    Set <Integer>gen= new HashSet();
     Thread thread = new Thread(new Runnable() {
 
             @Override
@@ -79,13 +79,15 @@ public class Griton {
     public void aparecerCarta(){      
         boolean b= true;
         int rd=1;
-        
         while(b){
             rd = (int)(Math.random()*(52)+1);
-            if(gen.add(rd)){
-                b=false;
-            }else{
+            if(gen.contains(rd)){
+                System.out.println("no se pudo");
                 b=true;
+            }else{
+                gen.add(rd);
+                System.out.println(gen);
+                b=false;
             }        
          }
         id=tm.get(rd).getId();
