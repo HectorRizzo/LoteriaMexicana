@@ -133,7 +133,7 @@ public class NuevoJuego {
 
     private void LoteriaClicked() {
         if(t.comprobartablero(r)){
-            Alert alert=new Alert(Alert.AlertType.WARNING);
+            Alert alert=new Alert(Alert.AlertType.WARNING,"Ganó");
             alert.showAndWait();
         }
         /*columnasTablero=t.getColumnas();

@@ -168,6 +168,19 @@ public class tablero {
                         }
                     }
                 }
+            case 2:
+                for(Integer i:filas){
+                    if(contadorFC.add(i)){
+                        contadorFC.add(i);
+                        acumulador.put(i,1);
+                    }else{
+                        int valor=acumulador.get(i);
+                        acumulador.put(i,++valor);
+                        if(valor==4){
+                            comp=true;
+                        }
+                    }
+                }
                 
                 
         }
