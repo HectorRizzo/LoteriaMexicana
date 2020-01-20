@@ -13,21 +13,33 @@ import javafx.scene.image.ImageView;
  * @author daymo
  */
 public class Carta {
-    ImageView imgview;
-    String name;
+    Image img;
+    String id;
     EstadoCarta estado;
 
-    public Carta(ImageView imgview, String name) {
-        this.imgview = imgview;
-        this.name = name;
+    public Carta(Image img, String id) {
+        this.img= img;
+        this.id = id;
     }
 
     
     
-    public Carta(ImageView imgview, String name, EstadoCarta estado) {
-        this.imgview = imgview;
-        this.name = name;
+    public Carta(Image img, String id, EstadoCarta estado) {
+        this.img = img;
+        this.id = id;
         this.estado = estado;
+    }
+
+    public Image getImg() {
+        return img;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public EstadoCarta getEstado() {
+        return estado;
     }
     
     
