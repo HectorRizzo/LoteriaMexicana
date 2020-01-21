@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
@@ -156,6 +157,9 @@ public class tablero {
         int idregla=r.getIdRule();
         TreeMap <Integer,Integer> acumulador= new TreeMap();
         Set <Integer> contadorFC= new HashSet();
+        
+        int count=0;
+        //if(columnas.size()>4)
         switch(idregla){
             case 1:
                 for(Integer i:columnas){
@@ -170,6 +174,7 @@ public class tablero {
                         }
                     }
                 }
+            break;
             case 2:
                 for(Integer i:filas){
                     if(contadorFC.add(i)){
@@ -183,6 +188,83 @@ public class tablero {
                         }
                     }
                 }
+            break;
+            case 3:
+                int index=0;
+                for(Integer i: columnas){
+                    
+                     if(i==1 || i==4){
+                         if(filas.get(index)==1||filas.get(index)==4){
+                             
+                             count++;
+                         }
+                     }
+                     index++;
+                    
+                }
+                if(count==4){
+                    comp=true;
+                }
+            break;
+                
+            case 4:
+                int verificador1=0,verificador2=0,verificador3=0,verificador4=0;
+                int i=0;
+                for(Integer j: columnas){
+                    
+                    if(j==1&& filas.get(i)==1){
+                        int g= 0;
+                        for(Integer h:columnas){    
+                            if(h==1||h==2){
+                                if(filas.get(g)==1||filas.get(g)==2){
+                                    verificador1++;  
+                                }
+                            }
+                            g++;
+                        }   
+                    }
+                    if(j==1&& filas.get(i)==4){
+                        int g= 0;
+                        for(Integer h:columnas){
+                            if(h==1||h==2){
+                                if(filas.get(g)==4||filas.get(g)==3){
+                                    verificador2++;  
+                                }
+                            }
+                            g++;
+
+                        }   
+                    }
+                    if(j==4&& filas.get(i)==1){
+                        int g= 0;
+                        for(Integer h:columnas){
+                            if(h==3||h==4){
+                                if(filas.get(g)==1||filas.get(g)==2){
+                                    verificador3++;  
+                                }
+                            }
+                            g++;
+                        }
+                        
+                    }
+                    if(j==4&& filas.get(i)==4){
+                        int g= 0;
+                        for(Integer h:columnas){
+                            if(h==3||h==4){
+                                if(filas.get(g)==3||filas.get(g)==4){
+                                    verificador4++;  
+                                }
+                            } 
+                        g++;
+                        }   
+                    }
+                    i++;
+                    
+                }
+                if(verificador1==4||verificador2==4||verificador3==4||verificador4==4){
+                    comp=true;
+                }
+            break;
                 
                 
         }
