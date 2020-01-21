@@ -32,6 +32,8 @@ public class Griton {
     Timer timer = new Timer();
     ImageView iv;
     Set <Integer>gen= new HashSet();
+    int primeraCarta= (int) (Math.random()*(52)+1);
+    NuevoJuego nj;
     Thread thread = new Thread(new Runnable() {
 
             @Override
@@ -43,8 +45,8 @@ public class Griton {
                         aparecerCarta();
                     }
                 };
-
-                while (true) {
+                
+                while (nj.isEstadoJuego()) {
                     try {
                         Thread.sleep(3000);
                     } catch (InterruptedException ex) {
@@ -58,6 +60,7 @@ public class Griton {
         });
     String id;
     Griton() {
+
     }
 
     
@@ -71,22 +74,23 @@ public class Griton {
 
     
     
-    public Griton(TreeMap<Integer, Carta> tm) {
+    public Griton(NuevoJuego nj,TreeMap<Integer, Carta> tm) {
+        this.nj=nj;
         this.tm = tm;
+        gen.add(primeraCarta);
     }
     
     
-    public void aparecerCarta(){      
+    public void aparecerCarta(){
+        
         boolean b= true;
         int rd=1;
         while(b){
             rd = (int)(Math.random()*(52)+1);
             if(gen.contains(rd)){
-                System.out.println("no se pudo");
                 b=true;
             }else{
                 gen.add(rd);
-                System.out.println(gen);
                 b=false;
             }        
          }

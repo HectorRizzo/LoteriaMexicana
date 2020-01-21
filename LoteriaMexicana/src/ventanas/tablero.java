@@ -31,13 +31,28 @@ import modelo.EstadoCarta;
  */
 public class tablero {
     GridPane tablero;
+    String tipo="";
     reglas r;
     NuevoJuego nj;
+    //Para computer
+    ArrayList <Carta> cartasComputer=new ArrayList();
+    ArrayList <StackPane> spComputer=new ArrayList();
+    ArrayList <ImageView> imvComputer=new ArrayList();
+
     ArrayList<Integer> columnas=new ArrayList();
     ArrayList <Integer> filas= new ArrayList();
-    public tablero(NuevoJuego nj, reglas r) {
+    public tablero(String tipo,NuevoJuego nj, reglas r) {
+        this.tipo=tipo;
         this.nj = nj;
         this.r=r;
+    }
+
+    public ArrayList<StackPane> getSpComputer() {
+        return spComputer;
+    }
+
+    public ArrayList<ImageView> getImvComputer() {
+        return imvComputer;
     }
     
     
@@ -45,9 +60,17 @@ public class tablero {
         return tablero;
     }
 
-    
-    public void crearTablero(TreeMap cartas){
+    public String getTipo() {
+        return tipo;
+    }
 
+    public ArrayList<Carta> getCartasComputer() {
+        return cartasComputer;
+    }
+
+    
+    public void crearTablero(TreeMap cartas,String computer){
+        
         tablero= new GridPane();
         int rd=1;
         int lenX= 4;
@@ -60,7 +83,6 @@ public class tablero {
                     rd = (int)(Math.random()*(52)+1);
                     if( contenedo.add(rd)){
                         b=false;
-                        System.out.println("cambio");
                         Carta c= (Carta) cartas.get(rd);
                          ImageView imv=new ImageView(c.getImg());
                         imv.setFitHeight(150);
@@ -69,10 +91,8 @@ public class tablero {
                         sp.getChildren().add(imv);
                         sp.setOnMouseClicked(e->ComprobarCarta(nj,c,imv,sp));
                         tablero.setStyle("-fx-background-color: yellow, orange ; -fx-grid-lines-visible: true");
-                        
                         tablero.add(sp, i, j);
-                        System.out.println(rd);
-                        System.out.println("Numero pos :"+ i +", "+j);
+                       
                     }else{
                         b=true;
                     }        
@@ -119,7 +139,7 @@ public class tablero {
         
     }
 
-    private void ComprobarCarta(NuevoJuego nj,Carta c,ImageView imv, StackPane sp) 
+    public void ComprobarCarta(NuevoJuego nj,Carta c,ImageView imv, StackPane sp) 
     
     {
         System.out.println(c.getEstado()==EstadoCarta.JUGADO);
@@ -127,7 +147,12 @@ public class tablero {
             if(c.getEstado()==EstadoCarta.JUGADO){
                 
             }else{
+                if(this.getTipo().equals("usuario")){
                 PonerBean(imv,sp);
+                }else{
+                    PonerBean(imv,sp);
+
+                }
                 System.out.println(tablero.getColumnIndex(sp));
                 columnas.add(tablero.getColumnIndex(sp));
                 filas.add(tablero.getRowIndex(sp));
@@ -143,6 +168,44 @@ public class tablero {
             }
         }
     }
+    
+        public void crearTableroComputer(TreeMap cartas,String computer){
+        
+        tablero= new GridPane();
+        int rd=1;
+        int lenX= 4;
+        int lenY=4;
+        Set <Integer> contenedo= new HashSet();
+        for(int i=1;i<=lenX;i++){
+            for(int j=1; j<=lenY;j++){
+                boolean b=true;
+                while(b){
+                    rd = (int)(Math.random()*(52)+1);
+                    if( contenedo.add(rd)){
+                        b=false;
+                        Carta c= (Carta) cartas.get(rd);
+                         ImageView imv=new ImageView(c.getImg());
+                        imv.setFitHeight(60);
+                        imv.setFitWidth(50);
+                        StackPane sp= new StackPane();
+                        sp.getChildren().add(imv);
+                        cartasComputer.add(c);
+                        spComputer.add(sp);
+                        imvComputer.add(imv);
+                        tablero.setStyle("-fx-background-color: yellow, orange ; -fx-grid-lines-visible: true");
+                        
+                        tablero.add(sp, i, j);
+                       
+                    }else{
+                        b=true;
+                    }        
+                }
+                
+                
+            }
+        }
+    }
+
 
     public ArrayList<Integer> getColumnas() {
         return columnas;
@@ -159,7 +222,6 @@ public class tablero {
         Set <Integer> contadorFC= new HashSet();
         
         int count=0;
-        //if(columnas.size()>4)
         switch(idregla){
             case 1:
                 for(Integer i:columnas){
@@ -271,5 +333,37 @@ public class tablero {
         return comp;
     }
 
-   
+   public void ComprobarCartaComputer(NuevoJuego nj,ArrayList<Carta> cartas,ArrayList <ImageView> imvcomputer, ArrayList <StackPane> spcomputer) 
+    
+    {
+        int index=0;
+        for(Carta c:cartas){
+        System.out.println(c.getEstado()==EstadoCarta.JUGADO);
+        if(nj.getGt().getId().equals(c.getId())){
+            if(c.getEstado()==EstadoCarta.JUGADO){
+                
+            }else{
+                if(this.getTipo().equals("usuario")){
+                PonerBean(imvcomputer.get(index),spcomputer.get(index));
+                }else{
+                    PonerBean(imvcomputer.get(index),spcomputer.get(index));
+
+                }
+                System.out.println(tablero.getColumnIndex(spcomputer.get(index)));
+                columnas.add(tablero.getColumnIndex(spcomputer.get(index)));
+                filas.add(tablero.getRowIndex(spcomputer.get(index)));
+                
+        c.setEstado(EstadoCarta.JUGADO);
+            }
+        
+        }else{
+            if(c.getEstado()==EstadoCarta.JUGADO){
+                
+            }else{
+                PonerX(imvcomputer.get(index),spcomputer.get(index));
+            }
+        }
+        index++;
+        }
+    }
 }

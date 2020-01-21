@@ -5,6 +5,7 @@
  */
 package ventanas;
 
+import Hilos.Hilo;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import java.io.FileInputStream;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
@@ -35,15 +37,29 @@ import modelo.Carta;
 public class NuevoJuego {
     TreeMap <Integer,Carta> cartas=new TreeMap<Integer,Carta>();
     BorderPane bpNuevoJuego= new BorderPane();
+    boolean estadoJuego=true;
     tablero t;
+    Hilo hilo;
+    tablero computerT;
     reglas r;
     Griton gt;
     VBox vbright= new VBox ();
+    VBox vbleft= new VBox();
     StackPane sploteria= new StackPane();
     ArrayList<Image> imagenes;
     ArrayList <Integer> columnasTablero;
     ArrayList <Integer> filasTablero;
+    String computer="si";
 
+    public tablero getComputerT() {
+        return computerT;
+    }
+
+    public reglas getR() {
+        return r;
+    }
+    
+    
     public tablero getT() {
         return t;
     }
@@ -68,22 +84,31 @@ public class NuevoJuego {
     }
     
     public NuevoJuego() {
-        
+        hilo= new Hilo(this);
         r= new reglas();    
         r.cargarRegla();
-        t= new tablero(this,r);
+        t= new tablero("usuario",this,r);
         cargarDeck();
-        t.crearTablero(cartas);
-        
-        gt= new Griton(cartas);
+        t.crearTablero(cartas,"no");
+
+        //griton
+        gt= new Griton(this,cartas);
+        gt.aparecerCarta();
         gt.getThread().setDaemon(true);
         gt.getThread().start();
-        cargarLoteria();
-        vbright.getChildren().addAll(gt.getGriton(),sploteria);
         
+        cargarLoteria();
+        //oponente
+        computerT=new tablero("computer",this,r);
+        computerT.crearTableroComputer(cartas,computer);
+        hilo.getThreadComputer1().setDaemon(true);
+        hilo.getThreadComputer1().start();
+        
+        vbright.getChildren().addAll(gt.getGriton(),sploteria);
+        vbleft.getChildren().addAll(r.getVbreglas(),computerT.getTablero());
         bpNuevoJuego.setCenter(t.getTablero());
         bpNuevoJuego.setRight(vbright);
-        bpNuevoJuego.setLeft(r.getVbreglas());
+        bpNuevoJuego.setLeft(vbleft);
         
 
     }
@@ -94,7 +119,7 @@ public class NuevoJuego {
             ImageView ivlot=new ImageView(lot);
             ivlot.setFitHeight(70);
             ivlot.setFitWidth(200);
-            ivlot.setOnMouseClicked(e-> LoteriaClicked());
+            ivlot.setOnMouseClicked(e-> ComprobarLoteria(t,r));
             sploteria.getChildren().clear();
             sploteria.setPadding(new Insets(50));
             sploteria.getChildren().add(ivlot);
@@ -102,6 +127,12 @@ public class NuevoJuego {
             Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public boolean isEstadoJuego() {
+        return estadoJuego;
+    }
+
+    
     
     public TreeMap<Integer, Carta> getCartas() {
         return cartas;
@@ -131,16 +162,17 @@ public class NuevoJuego {
         }
     }
 
-    private void LoteriaClicked() {
+    public void ComprobarLoteria(tablero t, reglas r) {
+       
         if(t.comprobartablero(r)){
             Alert alert=new Alert(Alert.AlertType.WARNING,"Ganó");
             alert.showAndWait();
+            estadoJuego=false;
         }
-        /*columnasTablero=t.getColumnas();
-        filasTablero=t.getFilas();
-        */
+        
     }
- 
     
+    
+ 
     
 }
