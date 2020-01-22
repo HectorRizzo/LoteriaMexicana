@@ -35,21 +35,26 @@ import modelo.Carta;
  * @author daymo
  */
 public class NuevoJuego {
-    TreeMap <Integer,Carta> cartas=new TreeMap<Integer,Carta>();
-    BorderPane bpNuevoJuego= new BorderPane();
-    boolean estadoJuego=true;
-    tablero t;
-    Hilo hilo;
-    tablero computerT;
-    reglas r;
-    Griton gt;
-    VBox vbright= new VBox ();
-    VBox vbleft= new VBox();
-    StackPane sploteria= new StackPane();
-    ArrayList<Image> imagenes;
-    ArrayList <Integer> columnasTablero;
-    ArrayList <Integer> filasTablero;
+    
+    TreeMap <Integer,Carta> cartas=new TreeMap<Integer,Carta>();// mapa donde se guarda la carta con su id
+    BorderPane bpNuevoJuego= new BorderPane(); //este es el pane de la aplicacion
+    boolean estadoJuego=false; //comprueba si hubo un ganador
+    tablero t; //tablero usuario
+    Hilo hilo; //hilo que verifica las cartas y el tablero del oponente
+    Hilo hilo2;
+    tablero computerT; //tablero del oponente
+    
+    tablero oponente2;
+    reglas r; // nos dice la formacion a completar
+    Griton gt; 
+    VBox vbright= new VBox(); //lena la parte derecha del tablero
+    VBox vbleft= new VBox(); //llena la parte izquierda del tablero
+    StackPane sploteria= new StackPane(); //layout para la imagen loteria
+    ArrayList<Image> imagenes; //lista de las imagenes de la carta
+    ArrayList <Integer> columnasTablero; //lista de la posición en y de las cartas del tablero
+    ArrayList <Integer> filasTablero; //lista de la posición x de las del tablero
     String computer="si";
+    String ruta="src/images/deck";
 
     public tablero getComputerT() {
         return computerT;
@@ -83,13 +88,15 @@ public class NuevoJuego {
         return bpNuevoJuego;
     }
     
-    public NuevoJuego() {
-        hilo= new Hilo(this);
+    public NuevoJuego() { 
+        //inicializa los hilos, los tableros y la imagen loteria
+        
+        
         r= new reglas();    
         r.cargarRegla();
-        t= new tablero("usuario",this,r);
+        t= new tablero(this,r);
         cargarDeck();
-        t.crearTablero(cartas,"no");
+        t.crearTablero(cartas);
 
         //griton
         gt= new Griton(this,cartas);
@@ -98,13 +105,19 @@ public class NuevoJuego {
         gt.getThread().start();
         
         cargarLoteria();
-        //oponente
+        //oponente1
         computerT=new tablero("computer",this,r);
-        computerT.crearTableroComputer(cartas,computer);
+        computerT.crearTableroComputer(cartas);
+        hilo= new Hilo(this,computerT);
         hilo.getThreadComputer1().setDaemon(true);
         hilo.getThreadComputer1().start();
-        
-        vbright.getChildren().addAll(gt.getGriton(),sploteria);
+        oponente2=new tablero("computer",this,r);
+        oponente2.crearTableroComputer(cartas);
+        hilo2= new Hilo(this,oponente2);
+        hilo2.getThreadComputer1().setDaemon(true);
+        hilo2.getThreadComputer1().start();
+        //agrega los elementos a su pane respectivo
+        vbright.getChildren().addAll(gt.getGriton(),sploteria , oponente2.getTablero());
         vbleft.getChildren().addAll(r.getVbreglas(),computerT.getTablero());
         bpNuevoJuego.setCenter(t.getTablero());
         bpNuevoJuego.setRight(vbright);
@@ -138,7 +151,7 @@ public class NuevoJuego {
         return cartas;
     }
     
-    String ruta="src/images/deck";
+    
     public void cargarDeck(){
         
         try {
@@ -166,8 +179,8 @@ public class NuevoJuego {
        
         if(t.comprobartablero(r)){
             Alert alert=new Alert(Alert.AlertType.WARNING,"Ganó");
+            estadoJuego=true;
             alert.showAndWait();
-            estadoJuego=false;
         }
         
     }

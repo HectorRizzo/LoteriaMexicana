@@ -46,7 +46,7 @@ public class Griton {
                     }
                 };
                 
-                while (nj.isEstadoJuego()) {
+                while (!nj.isEstadoJuego()) {
                     try {
                         Thread.sleep(3000);
                     } catch (InterruptedException ex) {
