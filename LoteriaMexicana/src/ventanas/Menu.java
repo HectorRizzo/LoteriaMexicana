@@ -6,6 +6,7 @@
 package ventanas;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -19,13 +20,15 @@ import javafx.stage.Stage;
 public class Menu {
     BorderPane bp;
     VBox vbmenu;
-    Button btnConf,btnNuevo;
+    Button btnConf,btnNuevo,btnReporte;
     Configuracion cf;
     NuevoJuego nj;
+    Reporte r;
     Stage stage;
     Scene sceneConf;
     Scene sceneNJ;
     Scene scene;
+    Scene sceneReporte;
 
     public Stage getStage() {
         return stage;
@@ -60,8 +63,12 @@ public class Menu {
         btnNuevo.setPadding(new Insets(10));
         btnNuevo.setOnAction(e -> IniciarNuevoJuego());
         scene= new Scene(getBp(), 1000,900);
-        
-        vbmenu.getChildren().addAll(btnNuevo,btnConf);
+        btnReporte= new Button("Reporte");
+        btnReporte.setPadding(new Insets(10));
+        btnReporte.setOnAction(e -> IniciarReporte());
+        vbmenu.getChildren().addAll(btnNuevo,btnConf,btnReporte);
+        vbmenu.setSpacing(10);
+        vbmenu.setAlignment(Pos.CENTER);
         bp.setCenter(vbmenu);
         
     }
@@ -77,6 +84,8 @@ public class Menu {
     private void IniciarConfiguracion() {
         cf= new Configuracion(this);
         sceneConf=new Scene(cf.getBpane(),500,500);
+        sceneConf.getStylesheets().add("css/estilo.css");
+        sceneConf.getStylesheets().add(getClass().getResource("").toExternalForm());
         stage.setScene(sceneConf);
         System.out.println("a");
     }
@@ -86,6 +95,15 @@ public class Menu {
         nj.cargarDeck();
         sceneNJ= new Scene(nj.getBpNuevoJuego(),1000,900);
         stage.setScene(sceneNJ);
+    }
+    
+    private void IniciarReporte() {
+        Reporte r= new Reporte(this);
+        sceneReporte= new Scene(r.getBpane(),1000,900);
+        sceneReporte.getStylesheets().add("css/estilo.css");
+        sceneReporte.getStylesheets().add(getClass().getResource("").toExternalForm());
+        stage.setScene(sceneReporte);
+        System.out.println("this");
     }
     
     

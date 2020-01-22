@@ -35,12 +35,11 @@ public class LoteriaMexicana extends Application {
         
         
         //Scene scene = new Scene(cf.getBpane(), 800,500);
-        
         m.getScene().setFill(Color.AQUA);
         File f = new File("src/css/estilo.css");
         m.getScene().getStylesheets().add("file:///"+f.getAbsolutePath().replace("\\","/"));
         m.getScene().getStylesheets().add(getClass().getResource("").toExternalForm());
-        primaryStage.setTitle("Configuración");
+        primaryStage.setTitle("Loteria Mexicana");
         primaryStage.setScene(m.getScene());
         primaryStage.show();
     }
