@@ -31,7 +31,7 @@ public class Configuracion {
 
     public Configuracion() {
         gpane= new GridPane();
-         bpane= new BorderPane();
+        bpane= new BorderPane();
         VBox vconf= new VBox();
          /*
         HBox cant= new HBox();
@@ -64,10 +64,6 @@ public class Configuracion {
         bpane.setCenter(gpane);
         bpane.setTop(vconf);
         gpane.getChildren().addAll(lbCant,lbVisible,rbCant1,rbCant2,rbVisible,rbOculto);
-
-
-
-        
     }
 
     public GridPane getGpane() {

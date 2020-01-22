@@ -7,19 +7,11 @@ package loteriamexicana;
 
 import java.io.File;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import ventanas.Configuracion;
-import ventanas.Griton;
 import ventanas.NuevoJuego;
-import ventanas.tablero;
+import ventanas.PaneOrganizer;
 
 /**
  *
@@ -29,25 +21,16 @@ public class LoteriaMexicana extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
         NuevoJuego nj= new NuevoJuego();
-        nj.cargarDeck();
-        
-        //Scene scene = new Scene(cf.getBpane(), 800,500);
-        Scene scene = new Scene(nj.getBpNuevoJuego(), 1000,900);
+        PaneOrganizer cf = new PaneOrganizer();
+        nj.cargarDeck();      
+        Scene scene = new Scene(cf.getBpane(), 800,500);
+        //Scene scene = new Scene(nj.getBpNuevoJuego(), 1000,900);
         scene.setFill(Color.AQUA);
         File f = new File("src/css/estilo.css");
         scene.getStylesheets().add("file:///"+f.getAbsolutePath().replace("\\","/"));
         scene.getStylesheets().add(getClass().getResource("").toExternalForm());
-        primaryStage.setTitle("Configuración");
+        primaryStage.setTitle("Loteria Mexicana");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
