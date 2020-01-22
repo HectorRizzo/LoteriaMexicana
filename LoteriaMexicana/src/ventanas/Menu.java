@@ -5,10 +5,12 @@
  */
 package ventanas;
 
+import java.util.Optional;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -91,6 +93,7 @@ public class Menu {
     }
 
     private void IniciarNuevoJuego() {
+        pedirNombre();
         NuevoJuego nj= new NuevoJuego();
         nj.cargarDeck();
         sceneNJ= new Scene(nj.getBpNuevoJuego(),1000,900);
@@ -104,6 +107,15 @@ public class Menu {
         sceneReporte.getStylesheets().add(getClass().getResource("").toExternalForm());
         stage.setScene(sceneReporte);
         System.out.println("this");
+    }
+    
+    private String pedirNombre(){
+        TextInputDialog tid = new TextInputDialog();
+        tid.setHeaderText(null);
+        tid.setTitle("Nombre");
+        tid.setContentText("Introduce tu nombre");
+        Optional<String> texto = tid.showAndWait();
+        return texto.toString();
     }
     
     
