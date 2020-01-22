@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ventanas.Configuracion;
 import ventanas.Griton;
+import ventanas.Menu;
 import ventanas.NuevoJuego;
 import ventanas.tablero;
 
@@ -29,26 +30,18 @@ public class LoteriaMexicana extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        NuevoJuego nj= new NuevoJuego();
-        nj.cargarDeck();
+       Menu m= new Menu(primaryStage);
+       m.IniciarMenu();
+        
         
         //Scene scene = new Scene(cf.getBpane(), 800,500);
-        Scene scene = new Scene(nj.getBpNuevoJuego(), 1000,900);
-        scene.setFill(Color.AQUA);
+        
+        m.getScene().setFill(Color.AQUA);
         File f = new File("src/css/estilo.css");
-        scene.getStylesheets().add("file:///"+f.getAbsolutePath().replace("\\","/"));
-        scene.getStylesheets().add(getClass().getResource("").toExternalForm());
+        m.getScene().getStylesheets().add("file:///"+f.getAbsolutePath().replace("\\","/"));
+        m.getScene().getStylesheets().add(getClass().getResource("").toExternalForm());
         primaryStage.setTitle("Configuración");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(m.getScene());
         primaryStage.show();
     }
 

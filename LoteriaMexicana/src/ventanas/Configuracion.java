@@ -6,6 +6,7 @@
 package ventanas;
 
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -18,18 +19,23 @@ import javafx.scene.layout.VBox;
  * @author daymo
  */
 public class Configuracion {
+    Menu m;
+    tablero t;
+    NuevoJuego nj;
     GridPane gpane;
     BorderPane bpane;
     Label lbCant;
     Label lbVisible;
     RadioButton rbCant1, rbCant2;
     RadioButton rbVisible, rbOculto;
+    Button regresar;
 
     public BorderPane getBpane() {
         return bpane;
     }
 
-    public Configuracion() {
+    public Configuracion(Menu m) {
+        this.m=m;
         gpane= new GridPane();
          bpane= new BorderPane();
         VBox vconf= new VBox();
@@ -52,6 +58,8 @@ public class Configuracion {
         rbCant2.setToggleGroup(oponentes);
         rbVisible.setToggleGroup(tgVisible);
         rbOculto.setToggleGroup(tgVisible);
+        regresar=new Button("Regresar");
+        regresar.setOnAction(e-> regresarMenu());
         gpane.setPadding(new Insets(10));
         gpane.setHgap(20);
         gpane.setVgap(20);
@@ -64,6 +72,12 @@ public class Configuracion {
         bpane.setCenter(gpane);
         bpane.setTop(vconf);
         gpane.getChildren().addAll(lbCant,lbVisible,rbCant1,rbCant2,rbVisible,rbOculto);
+        bpane.setBottom(regresar);
+        
+        if(tgVisible.getSelectedToggle()==rbOculto){
+            t.setVisible(false);
+            //nj.getComputerT().setVisible(false);
+        }
 
 
 
@@ -72,6 +86,10 @@ public class Configuracion {
 
     public GridPane getGpane() {
         return gpane;
+    }
+
+    private void regresarMenu() {
+        m.getStage().setScene(m.getScene());
     }
     
     

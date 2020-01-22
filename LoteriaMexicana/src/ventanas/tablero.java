@@ -43,6 +43,10 @@ public class tablero {
     ArrayList<Integer> columnas=new ArrayList();
     ArrayList <Integer> filas= new ArrayList();
 
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
     public tablero(NuevoJuego nj ,reglas r) {
         this.r = r;
         this.nj = nj;
