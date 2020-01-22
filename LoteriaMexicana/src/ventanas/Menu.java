@@ -78,7 +78,7 @@ public class Menu {
         cf= new Configuracion(this);
         sceneConf=new Scene(cf.getBpane(),500,500);
         stage.setScene(sceneConf);
-        
+        System.out.println("a");
     }
 
     private void IniciarNuevoJuego() {
