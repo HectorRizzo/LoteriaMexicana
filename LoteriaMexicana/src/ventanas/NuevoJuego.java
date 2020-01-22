@@ -55,6 +55,7 @@ public class NuevoJuego {
     ArrayList <Integer> filasTablero; //lista de la posición x de las del tablero
     String computer="si";
     String ruta="src/images/deck";
+    String nombre;
 
     public tablero getComputerT() {
         return computerT;
@@ -88,10 +89,9 @@ public class NuevoJuego {
         return bpNuevoJuego;
     }
     
-    public NuevoJuego() { 
+    public NuevoJuego(String nombre) { 
         //inicializa los hilos, los tableros y la imagen loteria
-        
-        
+        this.nombre =  nombre;
         r= new reglas();    
         r.cargarRegla();
         t= new tablero(this,r);
@@ -108,12 +108,12 @@ public class NuevoJuego {
         //oponente1
         computerT=new tablero("computer",this,r);
         computerT.crearTableroComputer(cartas);
-        hilo= new Hilo(this,computerT);
+        hilo= new Hilo(this,computerT,"Computador 1");
         hilo.getThreadComputer1().setDaemon(true);
         hilo.getThreadComputer1().start();
         oponente2=new tablero("computer",this,r);
         oponente2.crearTableroComputer(cartas);
-        hilo2= new Hilo(this,oponente2);
+        hilo2= new Hilo(this,oponente2,"Computador 2");
         hilo2.getThreadComputer1().setDaemon(true);
         hilo2.getThreadComputer1().start();
         //agrega los elementos a su pane respectivo
@@ -132,7 +132,7 @@ public class NuevoJuego {
             ImageView ivlot=new ImageView(lot);
             ivlot.setFitHeight(70);
             ivlot.setFitWidth(200);
-            ivlot.setOnMouseClicked(e-> ComprobarLoteria(t,r));
+            ivlot.setOnMouseClicked(e-> ComprobarLoteria(t,r,"Jugador"));
             sploteria.getChildren().clear();
             sploteria.setPadding(new Insets(50));
             sploteria.getChildren().add(ivlot);
@@ -175,13 +175,18 @@ public class NuevoJuego {
         }
     }
 
-    public void ComprobarLoteria(tablero t, reglas r) {
+    public void ComprobarLoteria(tablero t, reglas r,String info) {
        
         if(t.comprobartablero(r)){
-            Alert alert=new Alert(Alert.AlertType.WARNING,"Ganó");
+            Alert alert=new Alert(Alert.AlertType.WARNING,"Ganó " + info);
+            alert.setTitle("Juego Finalizado");
             estadoJuego=true;
             alert.showAndWait();
         }
+        
+    }
+    
+    public void generarReport(){
         
     }
     

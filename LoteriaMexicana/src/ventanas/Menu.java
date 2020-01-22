@@ -93,8 +93,8 @@ public class Menu {
     }
 
     private void IniciarNuevoJuego() {
-        pedirNombre();
-        NuevoJuego nj= new NuevoJuego();
+        String nombre = pedirNombre();
+        NuevoJuego nj= new NuevoJuego(nombre);
         nj.cargarDeck();
         sceneNJ= new Scene(nj.getBpNuevoJuego(),1000,900);
         stage.setScene(sceneNJ);
@@ -115,7 +115,7 @@ public class Menu {
         tid.setTitle("Nombre");
         tid.setContentText("Introduce tu nombre");
         Optional<String> texto = tid.showAndWait();
-        return texto.toString();
+        return texto.get();
     }
     
     

@@ -17,14 +17,16 @@ public class Hilo {
     NuevoJuego nj;
     tablero tablero;
     boolean ejecutar= true;
+    String info;
 
     public Thread getThreadComputer1() {
         return threadComputer1;
     }
     
-    public Hilo(NuevoJuego nj, tablero t) {
+    public Hilo(NuevoJuego nj, tablero t,String info) {
         this.nj = nj;
         this.tablero=t;
+        this.info = info;
     }
     
         
@@ -39,7 +41,7 @@ public class Hilo {
                     public void run() {
                         
                         tablero.ComprobarCartaComputer(nj , tablero.getCartasComputer(),tablero.getImvComputer(),tablero.getSpComputer());
-                        nj.ComprobarLoteria(tablero,nj.getR());
+                        nj.ComprobarLoteria(tablero,nj.getR(),info);
                         
                          }
                     
