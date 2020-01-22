@@ -55,7 +55,7 @@ public class Reporte {
         bpane.setCenter(vbox);
         regresar = new Button("Regresar");
         regresar.setOnAction((ActionEvent event) -> {
-
+                regresarMenu();
             });
         regresar.setAlignment(Pos.CENTER);
         HBox hbox = new HBox(regresar);
