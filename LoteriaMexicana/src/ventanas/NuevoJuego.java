@@ -203,7 +203,13 @@ public class NuevoJuego {
     }
     
     private void generarReport(String info){
-        Report rx = new Report(nombre,info,"2",t.r.obtenerRegla());
+        Report rx = null;
+        if(m.getCf().get2CantOponentes()){
+            rx = new Report(nombre,info,"2",t.r.obtenerRegla());
+        }
+        else{
+            rx = new Report(nombre,info,"1",t.r.obtenerRegla());
+        }
         Report.reportes.add(rx);
         System.out.println(rx);
     }
