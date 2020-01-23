@@ -33,6 +33,56 @@ public class Report {
         this.regla = regla;
         this.date = new Date().toString();
     }
+
+    public static ArrayList<Report> getReportes() {
+        return reportes;
+    }
+
+    public static void setReportes(ArrayList<Report> reportes) {
+        Report.reportes = reportes;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getGanador() {
+        return ganador;
+    }
+
+    public void setGanador(String ganador) {
+        this.ganador = ganador;
+    }
+
+    public String getOponentes() {
+        return oponentes;
+    }
+
+    public void setOponentes(String oponentes) {
+        this.oponentes = oponentes;
+    }
+
+    public String getRegla() {
+        return regla;
+    }
+
+    public void setRegla(String regla) {
+        this.regla = regla;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+    
+    
     
     
     
