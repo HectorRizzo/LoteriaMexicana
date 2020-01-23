@@ -51,7 +51,7 @@ public class Hilo {
                     try {
                         Thread.sleep(2000);
                         
-                        synchronized (this) {
+                    synchronized (this) {
                     while (nj.isEstadoJuego()) {
                         Thread.interrupted();
                         wait();

@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,6 +31,7 @@ import modelo.EstadoCarta;
  * @author daymo
  */
 public class tablero {
+    boolean volver=true;
     boolean visible= true;
     GridPane tablero;
     String tipo="";
@@ -119,10 +121,10 @@ public class tablero {
         
         Image bean;
         try {
-            bean = new Image(new FileInputStream("src/images/bean.jpg"));
+            bean = new Image(new FileInputStream("src/images/bean.png"));
             ImageView frijol=new ImageView(bean);
-            frijol.setFitHeight(50);
-            frijol.setFitWidth(50);
+            frijol.setFitHeight(60);
+            frijol.setFitWidth(40);
             sp.getChildren().clear();
             sp.getChildren().addAll(imgv,frijol);
         } catch (FileNotFoundException ex) {
@@ -132,14 +134,19 @@ public class tablero {
             
         
     }
+    private void RegresarOriginal(ImageView imgv,StackPane sp){
+        sp.getChildren().clear();
+        sp.getChildren().add(imgv);
+        
+    }
     private void PonerX(ImageView imgv,StackPane sp) {
         
             Image equis;
         try {
             equis = new Image(new FileInputStream("src/images/equis.png"));
             ImageView ivequis=new ImageView(equis);
-            ivequis.setFitHeight(50);
-            ivequis.setFitWidth(50);
+            ivequis.setFitHeight(120);
+            ivequis.setFitWidth(100);
             sp.getChildren().clear();
             sp.getChildren().addAll(imgv,ivequis);
             
@@ -156,6 +163,7 @@ public class tablero {
             if(c.getEstado()==EstadoCarta.JUGADO){
                 
             }else{
+
                 if(this.getTipo().equals("computer")){
                 
                 }else{
@@ -173,14 +181,47 @@ public class tablero {
         }else{
             if(c.getEstado()==EstadoCarta.JUGADO){
                 
-            }else{
-                PonerX(imv,sp);
+            }else{   
+            PonerX(imv,sp);
+            
+            Thread thread = new Thread(new Runnable() {
+             
+            @Override
+            public void run() {
+                Runnable updater = new Runnable() {
+
+                    @Override
+                    public void run() {
+                        RegresarOriginal(imv,sp);
+                    }
+                };
+                System.out.println(volver);
+                
+                    try {
+                        while(volver){
+                        Thread.sleep(1500);
+                        volver=false;
+                        } 
+                        volver=true;
+                    } catch (InterruptedException ex) {
+                    }
+
+                    // UI update is run on the Application thread
+                    Platform.runLater(updater);
+                
             }
+
+        });
+            thread.setDaemon(true);
+            thread.start();
+                System.out.println(volver);
+                 }
         }
     }
     
-        public void crearTableroComputer(TreeMap cartas){
-        
+    public void crearTableroComputer(TreeMap cartas){
+        System.out.println(nj.getM());
+        visible=nj.getM().getCf().getTableroVisible();
         tablero= new GridPane();
         int rd=1;
         int lenX= 4;
@@ -196,16 +237,15 @@ public class tablero {
                         Carta c= (Carta) cartas.get(rd);
                         Carta c_pc= new Carta(c.getImg(),c.getId());
                         ImageView imv = null;
-                        visible=false;
                         if(visible){
                         imv=new ImageView(c_pc.getImg());
-                        imv.setFitHeight(60);
-                        imv.setFitWidth(50);
+                        imv.setFitHeight(80);
+                        imv.setFitWidth(60);
                         }else{
                             try {
                                 imv=new ImageView(new Image(new FileInputStream("src/deck/back.png")));
-                                imv.setFitHeight(60);
-                                imv.setFitWidth(50);
+                                imv.setFitHeight(80);
+                                imv.setFitWidth(60);
                             } catch (FileNotFoundException ex) {
                                 Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -228,7 +268,6 @@ public class tablero {
             }
         }
     }
-
 
     public ArrayList<Integer> getColumnas() {
         return columnas;
@@ -356,7 +395,7 @@ public class tablero {
         return comp;
     }
 
-   public void ComprobarCartaComputer(NuevoJuego nj,ArrayList<Carta> cartas,ArrayList <ImageView> imvcomputer, ArrayList <StackPane> spcomputer) {
+    public void ComprobarCartaComputer(NuevoJuego nj,ArrayList<Carta> cartas,ArrayList <ImageView> imvcomputer, ArrayList <StackPane> spcomputer) {
         int index=0;
         for(Carta c:cartas){
         if(nj.getGt().getId().equals(c.getId())){
@@ -369,7 +408,7 @@ public class tablero {
                 }else{
                     
                     Image bean;
-        try {
+            try {
             bean = new Image(new FileInputStream("src/deck/match.png"));
             ImageView frijol=new ImageView(bean);
             frijol.setFitHeight(50);
@@ -390,6 +429,7 @@ public class tablero {
             if(c.getEstado()==EstadoCarta.JUGADO){
                 
             }else{
+                
             }
         }
         index++;
