@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import modelo.Report;
 import ventanas.Configuracion;
 import ventanas.Griton;
 import ventanas.Menu;
@@ -32,6 +33,7 @@ public class LoteriaMexicana extends Application {
     public void start(Stage primaryStage) {
        Menu m= new Menu(primaryStage);
        m.IniciarMenu();
+       Report.lecturaReportes();
         
         
         //Scene scene = new Scene(cf.getBpane(), 800,500);

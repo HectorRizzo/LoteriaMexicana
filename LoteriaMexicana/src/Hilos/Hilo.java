@@ -64,11 +64,14 @@ public class Hilo {
                     // UI update is run on the Application thread
                     Platform.runLater(updater);
                 }
-            }
-            
-        
-        
+            }  
         });
+
+    public void setEjecutar(boolean ejecutar) {
+        this.ejecutar = ejecutar;
+    }
+        
+    
     }
 
 

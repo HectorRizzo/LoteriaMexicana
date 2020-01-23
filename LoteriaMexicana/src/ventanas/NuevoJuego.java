@@ -12,23 +12,20 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import modelo.Carta;
+import modelo.Report;
 
 /**
  *
@@ -56,6 +53,7 @@ public class NuevoJuego {
     String computer="si";
     String ruta="src/images/deck";
     String nombre;
+    Menu m;
 
     public tablero getComputerT() {
         return computerT;
@@ -89,8 +87,9 @@ public class NuevoJuego {
         return bpNuevoJuego;
     }
     
-    public NuevoJuego(String nombre) { 
+    public NuevoJuego(String nombre,Menu m) { 
         //inicializa los hilos, los tableros y la imagen loteria
+        this.m = m;
         this.nombre =  nombre;
         r= new reglas();    
         r.cargarRegla();
@@ -180,15 +179,22 @@ public class NuevoJuego {
         if(t.comprobartablero(r)){
             Alert alert=new Alert(Alert.AlertType.WARNING,"Ganó " + info);
             alert.setTitle("Juego Finalizado");
+            generarReport(info);
             estadoJuego=true;
-            alert.showAndWait();
-        }
-        
+            alert.showAndWait(); 
+        }   
     }
     
-    public void generarReport(){
-        
+    private void generarReport(String info){
+        Report rx = new Report(nombre,info,"jugador1","jugador2",t.r.obtenerRegla());
+        Report.reportes.add(rx);
+        System.out.println(rx);
     }
+    
+    private void regresarMenu() {
+        m.getStage().setScene(m.getScene());
+    }
+    
     
     
  

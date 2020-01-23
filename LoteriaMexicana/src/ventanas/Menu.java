@@ -94,7 +94,7 @@ public class Menu {
 
     private void IniciarNuevoJuego() {
         String nombre = pedirNombre();
-        NuevoJuego nj= new NuevoJuego(nombre);
+        NuevoJuego nj= new NuevoJuego(nombre,this);
         nj.cargarDeck();
         sceneNJ= new Scene(nj.getBpNuevoJuego(),1000,900);
         stage.setScene(sceneNJ);

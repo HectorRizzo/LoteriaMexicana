@@ -74,6 +74,10 @@ public class reglas {
     public void formacion(){
         
     }
+    
+    public String obtenerRegla(){
+        return dicRules.get(idRule);
+    }
 
     
 }

@@ -6,6 +6,7 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -20,16 +21,18 @@ public class Report {
         reportes = new ArrayList<>();
     }
     
-    String nombre;
-    boolean j1;
-    boolean j2;
-    String ganador;
+    String info;
+    String j1;
+    String j2;
+    String regla;
+    String date;
 
-    public Report(String nombre, boolean j1, boolean j2, String ganador) {
-        this.nombre = nombre;
+    public Report(String nombre,String info, String j1, String j2, String regla) {
+        this.info = info;
         this.j1 = j1;
         this.j2 = j2;
-        this.ganador = ganador;
+        this.regla = regla;
+        this.date = new Date().toString();
     }
     
     
