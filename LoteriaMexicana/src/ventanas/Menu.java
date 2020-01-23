@@ -40,8 +40,7 @@ public class Menu {
         return sceneNJ;
     }
     
-    public Menu() {
-    }
+    
 
     public Menu(Stage stage) {
         this.stage = stage;
@@ -94,7 +93,9 @@ public class Menu {
 
     private void IniciarNuevoJuego() {
         String nombre = pedirNombre();
-        NuevoJuego nj= new NuevoJuego(nombre);
+        System.out.println(getCf());
+        NuevoJuego nj= new NuevoJuego(this,nombre);
+        
         nj.cargarDeck();
         sceneNJ= new Scene(nj.getBpNuevoJuego(),1000,900);
         stage.setScene(sceneNJ);
@@ -116,6 +117,14 @@ public class Menu {
         tid.setContentText("Introduce tu nombre");
         Optional<String> texto = tid.showAndWait();
         return texto.get();
+    }
+
+    public Configuracion getCf() {
+        return cf;
+    }
+
+    public Reporte getR() {
+        return r;
     }
     
     

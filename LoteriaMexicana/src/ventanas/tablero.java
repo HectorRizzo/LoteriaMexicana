@@ -220,7 +220,8 @@ public class tablero {
     }
     
     public void crearTableroComputer(TreeMap cartas){
-        
+        System.out.println(nj.getM());
+        visible=nj.getM().getCf().getTableroVisible();
         tablero= new GridPane();
         int rd=1;
         int lenX= 4;
@@ -236,7 +237,6 @@ public class tablero {
                         Carta c= (Carta) cartas.get(rd);
                         Carta c_pc= new Carta(c.getImg(),c.getId());
                         ImageView imv = null;
-                        visible=true;
                         if(visible){
                         imv=new ImageView(c_pc.getImg());
                         imv.setFitHeight(80);

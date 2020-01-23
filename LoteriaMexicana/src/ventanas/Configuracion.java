@@ -21,6 +21,8 @@ import javafx.scene.layout.VBox;
  * @author daymo
  */
 public class Configuracion {
+    Boolean tableroVisible=true;
+    Boolean cant2Oponentes=false;
     Menu m;
     tablero t;
     NuevoJuego nj;
@@ -30,7 +32,7 @@ public class Configuracion {
     Label lbVisible;
     RadioButton rbCant1, rbCant2;
     RadioButton rbVisible, rbOculto;
-    Button regresar;
+    Button confirmar;
 
     public BorderPane getBpane() {
         return bpane;
@@ -53,31 +55,40 @@ public class Configuracion {
         //Button
         ToggleGroup tgVisible = new ToggleGroup();
         ToggleGroup oponentes = new ToggleGroup();
+        
         rbCant1= new RadioButton("1 Oponente");
         rbCant2= new RadioButton("2 Oponentes");
         rbVisible=new RadioButton("Visible");
         rbOculto= new RadioButton("Oculto");
+        
         rbCant1.setToggleGroup(oponentes);
         rbCant2.setToggleGroup(oponentes);
+        rbCant1.setSelected(true);
+        
         rbVisible.setToggleGroup(tgVisible);
         rbOculto.setToggleGroup(tgVisible);
-        regresar=new Button("Regresar");
-        regresar.setOnAction(e-> regresarMenu());
+        rbVisible.setSelected(true);
+        
+        confirmar=new Button("Confirmar");
+        confirmar.setOnAction(e-> regresarMenu());
+        
         gpane.setPadding(new Insets(10));
         gpane.setHgap(20);
         gpane.setVgap(20);
+        
         GridPane.setConstraints(lbCant, 1,1 );
         GridPane.setConstraints(rbCant1,2,1 );
         GridPane.setConstraints(rbCant2, 3,1 );
         GridPane.setConstraints(lbVisible,1,2 );
         GridPane.setConstraints(rbVisible,2,2 );
         GridPane.setConstraints(rbOculto, 3,2 );
+        
         bpane.setCenter(gpane);
         bpane.setTop(vconf);
         gpane.getChildren().addAll(lbCant,lbVisible,rbCant1,rbCant2,rbVisible,rbOculto);
-        regresar.setAlignment(Pos.TOP_CENTER);
-        regresar.setPadding(new Insets(10,10,10,10));
-        hbox.getChildren().add(regresar);
+        confirmar.setAlignment(Pos.TOP_CENTER);
+        confirmar.setPadding(new Insets(10,10,10,10));
+        hbox.getChildren().add(confirmar);
         hbox.setSpacing(10);
         hbox.setAlignment(Pos.TOP_CENTER);
         bpane.setBottom(hbox);
@@ -91,14 +102,28 @@ public class Configuracion {
 
         
     }
+    private void regresarMenu() {
+        if(rbOculto.isSelected()){
+            tableroVisible=false;
+        }
+        if(rbCant2.isSelected()){
+            cant2Oponentes=true;
+        }
+        m.getStage().setScene(m.getScene());
+    }
 
     public GridPane getGpane() {
         return gpane;
     }
 
-    private void regresarMenu() {
-        m.getStage().setScene(m.getScene());
+    public Boolean getTableroVisible() {
+        return tableroVisible;
     }
+
+    public Boolean get2CantOponentes() {
+        return cant2Oponentes;
+    }
+
     
     
 }

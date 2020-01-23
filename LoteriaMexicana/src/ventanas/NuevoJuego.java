@@ -43,10 +43,10 @@ public class NuevoJuego {
     Hilo hilo; //hilo que verifica las cartas y el tablero del oponente
     Hilo hilo2;
     tablero computerT; //tablero del oponente
-    
     tablero oponente2;
     reglas r; // nos dice la formacion a completar
     Griton gt; 
+    Menu m;
     VBox vbright= new VBox(); //lena la parte derecha del tablero
     VBox vbleft= new VBox(); //llena la parte izquierda del tablero
     StackPane sploteria= new StackPane(); //layout para la imagen loteria
@@ -74,8 +74,6 @@ public class NuevoJuego {
         return gt;
     }
 
-    
-
     public ArrayList<Image> getImagenes() {
         return imagenes;
     }
@@ -89,7 +87,8 @@ public class NuevoJuego {
         return bpNuevoJuego;
     }
     
-    public NuevoJuego(String nombre) { 
+    public NuevoJuego(Menu m,String nombre) { 
+        this.m=m;
         //inicializa los hilos, los tableros y la imagen loteria
         this.nombre =  nombre;
         r= new reglas();    
@@ -111,13 +110,20 @@ public class NuevoJuego {
         hilo= new Hilo(this,computerT,"Computador 1");
         hilo.getThreadComputer1().setDaemon(true);
         hilo.getThreadComputer1().start();
-        oponente2=new tablero("computer",this,r);
-        oponente2.crearTableroComputer(cartas);
-        hilo2= new Hilo(this,oponente2,"Computador 2");
-        hilo2.getThreadComputer1().setDaemon(true);
-        hilo2.getThreadComputer1().start();
+        if(m.getCf().get2CantOponentes()){
+            oponente2=new tablero("computer",this,r);
+            oponente2.crearTableroComputer(cartas);
+            hilo2= new Hilo(this,oponente2,"Computador 2");
+            hilo2.getThreadComputer1().setDaemon(true);
+            hilo2.getThreadComputer1().start();
+            vbright.getChildren().addAll(gt.getGriton(),sploteria , oponente2.getTablero());
+
+        }else{
+            vbright.getChildren().addAll(gt.getGriton(),sploteria);
+
+        }
+        
         //agrega los elementos a su pane respectivo
-        vbright.getChildren().addAll(gt.getGriton(),sploteria , oponente2.getTablero());
         vbleft.getChildren().addAll(r.getVbreglas(),computerT.getTablero());
         bpNuevoJuego.setCenter(t.getTablero());
         bpNuevoJuego.setRight(vbright);
@@ -185,6 +191,10 @@ public class NuevoJuego {
     
     public void generarReport(){
         
+    }
+
+    public Menu getM() {
+        return m;
     }
     
     
