@@ -16,6 +16,7 @@ import java.util.TreeMap;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -96,7 +97,9 @@ public class Griton {
          }
         id=tm.get(rd).getId();
         iv= new ImageView(tm.get(rd).getImg()); 
+        
         Griton.getChildren().setAll(iv);
+        Griton.setAlignment(Pos.CENTER);
     }
 
     public Thread getThread() {

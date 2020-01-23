@@ -32,7 +32,7 @@ import modelo.Report;
  * @author daymo
  */
 public class NuevoJuego {
-    
+    StackPane spJuego= new StackPane();
     TreeMap <Integer,Carta> cartas=new TreeMap<Integer,Carta>();// mapa donde se guarda la carta con su id
     BorderPane bpNuevoJuego= new BorderPane(); //este es el pane de la aplicacion
     boolean estadoJuego=false; //comprueba si hubo un ganador
@@ -54,6 +54,7 @@ public class NuevoJuego {
     String ruta="src/images/deck";
     String nombre;
 
+    
     public tablero getComputerT() {
         return computerT;
     }
@@ -118,16 +119,29 @@ public class NuevoJuego {
 
         }else{
             vbright.getChildren().addAll(gt.getGriton(),sploteria);
+            
 
         }
         
         //agrega los elementos a su pane respectivo
         vbleft.getChildren().addAll(r.getVbreglas(),computerT.getTablero());
+        
         bpNuevoJuego.setCenter(t.getTablero());
         bpNuevoJuego.setRight(vbright);
         bpNuevoJuego.setLeft(vbleft);
-        
+        Image fondo;
+        try{
+            fondo = new Image(new FileInputStream("src/images/fondoJuego.jpg"));
+            ImageView ivFondo=new ImageView(fondo);
+            ivFondo.setFitHeight(1000);
+            ivFondo.setFitWidth(1000);
+            spJuego.getChildren().addAll(ivFondo,bpNuevoJuego);
+            
+        }catch(FileNotFoundException ex ){
+            Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
 
+        }
+        
     }
     public void cargarLoteria(){
         Image lot;
@@ -201,6 +215,11 @@ public class NuevoJuego {
     private void regresarMenu() {
         m.getStage().setScene(m.getScene());
     }
+
+    public StackPane getSpJuego() {
+        return spJuego;
+    }
+    
     
     
     

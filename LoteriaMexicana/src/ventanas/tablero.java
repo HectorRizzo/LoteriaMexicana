@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -104,7 +105,6 @@ public class tablero {
                         StackPane sp= new StackPane();
                         sp.getChildren().add(imv);
                         sp.setOnMouseClicked(e->ComprobarCarta(nj,c,imv,sp));
-                        tablero.setStyle("-fx-background-color: yellow, orange ; -fx-grid-lines-visible: true");
                         tablero.add(sp, i, j);
                        
                     }else{
@@ -255,7 +255,6 @@ public class tablero {
                         cartasComputer.add(c_pc);
                         spComputer.add(sp);
                         imvComputer.add(imv);
-                        tablero.setStyle("-fx-background-color: yellow, orange ; -fx-grid-lines-visible: true");
                         
                         tablero.add(sp, i, j);
                        

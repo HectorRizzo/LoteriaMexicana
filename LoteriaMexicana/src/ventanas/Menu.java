@@ -5,13 +5,20 @@
  */
 package ventanas;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -31,7 +38,7 @@ public class Menu {
     Scene sceneNJ;
     Scene scene;
     Scene sceneReporte;
-
+    StackPane spMenu= new StackPane();
     public Stage getStage() {
         return stage;
     }
@@ -63,15 +70,27 @@ public class Menu {
         btnNuevo= new Button("Nuevo Juego");
         btnNuevo.setPadding(new Insets(10));
         btnNuevo.setOnAction(e -> IniciarNuevoJuego());
-        scene= new Scene(getBp(), 1000,900);
         btnReporte= new Button("Reporte");
         btnReporte.setPadding(new Insets(10));
         btnReporte.setOnAction(e -> IniciarReporte());
-        vbmenu.getChildren().addAll(btnNuevo,btnConf,btnReporte);
+        vbmenu.getChildren().addAll(btnConf,btnNuevo,btnReporte);
         vbmenu.setSpacing(10);
         vbmenu.setAlignment(Pos.CENTER);
         bp.setCenter(vbmenu);
-        
+        Image fondo;
+        try{
+            fondo = new Image(new FileInputStream("src/images/fondo.jpg"));
+            ImageView ivFondo=new ImageView(fondo);
+            ivFondo.setFitHeight(1000);
+            ivFondo.setFitWidth(1000);
+            spMenu.getChildren().addAll(ivFondo,bp);
+            
+        }catch(FileNotFoundException ex ){
+            Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        scene= new Scene(getSpMenu(),1000,900);
+
     }
 
     public Scene getScene() {
@@ -84,7 +103,7 @@ public class Menu {
 
     private void IniciarConfiguracion() {
         cf= new Configuracion(this);
-        sceneConf=new Scene(cf.getBpane(),500,500);
+        sceneConf=new Scene(cf.getSpConf(),500,500);
         sceneConf.getStylesheets().add("css/estilo.css");
         sceneConf.getStylesheets().add(getClass().getResource("").toExternalForm());
         stage.setScene(sceneConf);
@@ -94,9 +113,12 @@ public class Menu {
     private void IniciarNuevoJuego() {
         String nombre = pedirNombre();
         System.out.println(getCf());
+        if(getCf()==null){
+            cf= new Configuracion(this);
+        }
         NuevoJuego nj= new NuevoJuego(this,nombre);
         nj.cargarDeck();
-        sceneNJ= new Scene(nj.getBpNuevoJuego(),1000,900);
+        sceneNJ= new Scene(nj.getSpJuego());
         stage.setScene(sceneNJ);
     }
     
@@ -125,8 +147,12 @@ public class Menu {
     public Reporte getR() {
         return r;
     }
-    
-    
 
+    public StackPane getSpMenu() {
+        return spMenu;
+    }
+    
+    
+    
 
 }

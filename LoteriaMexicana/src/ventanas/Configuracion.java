@@ -5,15 +5,22 @@
  */
 package ventanas;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -21,6 +28,7 @@ import javafx.scene.layout.VBox;
  * @author daymo
  */
 public class Configuracion {
+    StackPane spConf= new StackPane();
     Boolean tableroVisible=true;
     Boolean cant2Oponentes=false;
     Menu m;
@@ -49,8 +57,8 @@ public class Configuracion {
         HBox cant= new HBox();
         */
         //Labels
-        lbCant=new Label("Cantidad de oponentes: ");
-        lbVisible= new Label("Visibilidad de cartas de oponentes: ");
+        lbCant=new Label("Cantidad de oponentes:     ");
+        lbVisible= new Label("Cartas Oponentes:       ");
         
         //Button
         ToggleGroup tgVisible = new ToggleGroup();
@@ -73,8 +81,8 @@ public class Configuracion {
         confirmar.setOnAction(e-> regresarMenu());
         
         gpane.setPadding(new Insets(10));
-        gpane.setHgap(20);
-        gpane.setVgap(20);
+        gpane.setHgap(10);
+        gpane.setVgap(10);
         
         GridPane.setConstraints(lbCant, 1,1 );
         GridPane.setConstraints(rbCant1,2,1 );
@@ -86,6 +94,18 @@ public class Configuracion {
         bpane.setCenter(gpane);
         bpane.setTop(vconf);
         gpane.getChildren().addAll(lbCant,lbVisible,rbCant1,rbCant2,rbVisible,rbOculto);
+        Image fondo;
+        try{
+            fondo = new Image(new FileInputStream("src/images/configuracion.jpg"));
+            ImageView ivFondo=new ImageView(fondo);
+            ivFondo.setFitHeight(500);
+            ivFondo.setFitWidth(500);
+            spConf.getChildren().addAll(ivFondo,bpane);
+            
+        }catch(FileNotFoundException ex ){
+            Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
         confirmar.setAlignment(Pos.TOP_CENTER);
         confirmar.setPadding(new Insets(10,10,10,10));
         hbox.getChildren().add(confirmar);
@@ -122,6 +142,10 @@ public class Configuracion {
 
     public Boolean get2CantOponentes() {
         return cant2Oponentes;
+    }
+
+    public StackPane getSpConf() {
+        return spConf;
     }
 
     
