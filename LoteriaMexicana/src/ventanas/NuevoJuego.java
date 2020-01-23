@@ -145,12 +145,9 @@ public class NuevoJuego {
         return estadoJuego;
     }
 
-    
-    
     public TreeMap<Integer, Carta> getCartas() {
         return cartas;
     }
-    
     
     public void cargarDeck(){
         
