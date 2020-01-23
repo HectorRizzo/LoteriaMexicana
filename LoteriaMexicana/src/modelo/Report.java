@@ -20,17 +20,16 @@ public class Report {
     public static void lecturaReportes(){
         reportes = new ArrayList<>();
     }
-    
-    String info;
-    String j1;
-    String j2;
+    String nombre;
+    String ganador;
+    String oponentes;
     String regla;
     String date;
 
-    public Report(String nombre,String info, String j1, String j2, String regla) {
-        this.info = info;
-        this.j1 = j1;
-        this.j2 = j2;
+    public Report(String nombre,String info, String oponentes, String regla) {
+        this.nombre = nombre;
+        this.ganador = info;
+        this.oponentes = oponentes;
         this.regla = regla;
         this.date = new Date().toString();
     }

@@ -93,13 +93,8 @@ public class Menu {
 
     private void IniciarNuevoJuego() {
         String nombre = pedirNombre();
-<<<<<<< HEAD
-        NuevoJuego nj= new NuevoJuego(nombre,this);
-=======
         System.out.println(getCf());
         NuevoJuego nj= new NuevoJuego(this,nombre);
-        
->>>>>>> master
         nj.cargarDeck();
         sceneNJ= new Scene(nj.getBpNuevoJuego(),1000,900);
         stage.setScene(sceneNJ);

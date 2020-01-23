@@ -53,7 +53,6 @@ public class NuevoJuego {
     String computer="si";
     String ruta="src/images/deck";
     String nombre;
-    Menu m;
 
     public tablero getComputerT() {
         return computerT;
@@ -85,12 +84,8 @@ public class NuevoJuego {
         return bpNuevoJuego;
     }
     
-<<<<<<< HEAD
-    public NuevoJuego(String nombre,Menu m) { 
-=======
     public NuevoJuego(Menu m,String nombre) { 
         this.m=m;
->>>>>>> master
         //inicializa los hilos, los tableros y la imagen loteria
         this.m = m;
         this.nombre =  nombre;
@@ -189,11 +184,12 @@ public class NuevoJuego {
             generarReport(info);
             estadoJuego=true;
             alert.showAndWait(); 
+            regresarMenu();
         }   
     }
     
     private void generarReport(String info){
-        Report rx = new Report(nombre,info,"jugador1","jugador2",t.r.obtenerRegla());
+        Report rx = new Report(nombre,info,"2",t.r.obtenerRegla());
         Report.reportes.add(rx);
         System.out.println(rx);
     }
@@ -205,6 +201,7 @@ public class NuevoJuego {
     private void regresarMenu() {
         m.getStage().setScene(m.getScene());
     }
+    
     
     
     

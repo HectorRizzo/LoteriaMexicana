@@ -31,22 +31,27 @@ public class Reporte {
         this.m=m;
         bpane= new BorderPane();
         tableView = new TableView();
-        TableColumn<String, Report> column1 = new TableColumn<>("Fecha");
-        column1.setCellValueFactory(new PropertyValueFactory<>("fecha"));
-        TableColumn<String, Report> column2 = new TableColumn<>("Duracion");
-        column2.setCellValueFactory(new PropertyValueFactory<>("duracion"));
-        TableColumn<String, Report> column3 = new TableColumn<>("Nombre");
-        column3.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        TableColumn<String, Report> column4 = new TableColumn<>("Oponentes");
-        column4.setCellValueFactory(new PropertyValueFactory<>("oponentes"));
-        TableColumn<String, Report> column5 = new TableColumn<>("Alineacion");
-        column5.setCellValueFactory(new PropertyValueFactory<>("alineacion"));
+        TableColumn<String, Report> column1 = new TableColumn<>("Nombre");
+        column1.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        TableColumn<String, Report> column2 = new TableColumn<>("Oponentes");
+        column2.setCellValueFactory(new PropertyValueFactory<>("oponentes"));
+        TableColumn<String, Report> column3 = new TableColumn<>("Ganador");
+        column3.setCellValueFactory(new PropertyValueFactory<>("ganador"));
+        TableColumn<String, Report> column4 = new TableColumn<>("Regla");
+        column4.setCellValueFactory(new PropertyValueFactory<>("regla"));
+        TableColumn<String, Report> column5 = new TableColumn<>("Fecha");
+        column5.setCellValueFactory(new PropertyValueFactory<>("date"));
         tableView.getColumns().add(column1);
         tableView.getColumns().add(column2);
         tableView.getColumns().add(column3);
         tableView.getColumns().add(column4);
         tableView.getColumns().add(column5);
-
+        
+        for(Report r: Report.reportes){
+            System.out.println(r);
+            tableView.getItems().add(r);
+        }
+        
         //tableView.getItems().add(reporte1);
         //tableView.getItems().add(reporte2);
 
