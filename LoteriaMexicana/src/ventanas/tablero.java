@@ -42,7 +42,11 @@ public class tablero {
     ArrayList <Carta> cartasComputer=new ArrayList();
     ArrayList <StackPane> spComputer=new ArrayList();
     ArrayList <ImageView> imvComputer=new ArrayList();
-
+    
+        ArrayList <Carta> cartasJugador=new ArrayList();
+         ArrayList <StackPane> spJugador=new ArrayList();
+    ArrayList <ImageView> imvJugador=new ArrayList();
+    
     ArrayList<Integer> columnas=new ArrayList();
     ArrayList <Integer> filas= new ArrayList();
 
@@ -83,6 +87,10 @@ public class tablero {
         return cartasComputer;
     }
 
+    public ArrayList<Carta> getCartasJugador() {
+        return cartasJugador;
+    }
+
     
     public void crearTablero(TreeMap cartas){
         
@@ -106,6 +114,9 @@ public class tablero {
                         sp.getChildren().add(imv);
                         sp.setOnMouseClicked(e->ComprobarCarta(nj,c,imv,sp));
                         tablero.add(sp, i, j);
+                        cartasJugador.add(c);
+                        imvJugador.add(imv);
+                        spJugador.add(sp);
                        
                     }else{
                         b=true;
@@ -134,6 +145,29 @@ public class tablero {
             
         
     }
+    //Sustentacion 2
+        private void PonerAlerta(ImageView imgv,StackPane sp) {
+        
+        Image alerta;
+        try {
+            alerta = new Image(new FileInputStream("src/images/ayuda.png"));
+            ImageView help=new ImageView(alerta);
+            help.setFitHeight(50);
+            help.setFitWidth(40);
+            
+            help.setTranslateX(26);
+            help.setTranslateY(-48);
+            sp.getChildren().clear();
+            sp.getChildren().addAll(imgv,help);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            
+        
+    }
+
+    
     private void RegresarOriginal(ImageView imgv,StackPane sp){
         sp.getChildren().clear();
         sp.getChildren().add(imgv);
@@ -147,8 +181,10 @@ public class tablero {
             ImageView ivequis=new ImageView(equis);
             ivequis.setFitHeight(120);
             ivequis.setFitWidth(100);
+            
             sp.getChildren().clear();
             sp.getChildren().addAll(imgv,ivequis);
+            
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
@@ -159,8 +195,9 @@ public class tablero {
     }
 
     public void ComprobarCarta(NuevoJuego nj,Carta c,ImageView imv, StackPane sp) {
-        if(nj.getGt().getId().equals(c.getId())){
-            if(c.getEstado()==EstadoCarta.JUGADO){
+        //Tema sustentación 1
+        if(nj.getGt().getRegistroID().contains(c.getId())){//si la carta si está en el arraylist
+            if(c.getEstado()==EstadoCarta.JUGADO){ 
                 
             }else{
 
@@ -178,7 +215,7 @@ public class tablero {
             }
             
         
-        }else{
+        }  else{
             if(c.getEstado()==EstadoCarta.JUGADO){
                 
             }else{   
@@ -434,4 +471,42 @@ public class tablero {
         index++;
         }
     }
+
+    
+    //tema 2 sustentacion
+    public void ComprobarCartaAyuda(NuevoJuego nj,ArrayList<Carta> cartas,ArrayList <ImageView> imv, ArrayList <StackPane> sp) {
+        int index=0;
+        for(Carta c:cartas){
+        if(nj.getGt().getId().equals(c.getId())){
+            if(c.getEstado()==EstadoCarta.JUGADO){
+                
+            }else{
+                
+                PonerAlerta(imv.get(index),sp.get(index));
+
+                
+                columnas.add(tablero.getColumnIndex(sp.get(index)));
+                filas.add(tablero.getRowIndex(sp.get(index)));
+            }
+                
+            
+        
+        }else{
+            
+            
+        }
+        index++;
+        }
+    }
+
+    public ArrayList<StackPane> getSpJugador() {
+        return spJugador;
+    }
+
+    public ArrayList<ImageView> getImvJugador() {
+        return imvJugador;
+    }
+
+
+
 }

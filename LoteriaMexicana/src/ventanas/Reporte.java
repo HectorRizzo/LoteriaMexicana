@@ -41,14 +41,16 @@ public class Reporte {
         column4.setCellValueFactory(new PropertyValueFactory<>("regla"));
         TableColumn<String, Report> column5 = new TableColumn<>("Fecha");
         column5.setCellValueFactory(new PropertyValueFactory<>("date"));
+        TableColumn<String, Report> column6 = new TableColumn<>("Duracion");
+        column6.setCellValueFactory(new PropertyValueFactory<>("duracion"));
         tableView.getColumns().add(column1);
         tableView.getColumns().add(column2);
         tableView.getColumns().add(column3);
         tableView.getColumns().add(column4);
         tableView.getColumns().add(column5);
+        tableView.getColumns().add(column6);
         
         for(Report r: Report.reportes){
-            System.out.println(r);
             tableView.getItems().add(r);
         }
         

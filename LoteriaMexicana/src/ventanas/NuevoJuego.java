@@ -95,7 +95,15 @@ public class NuevoJuego {
         t= new tablero(this,r);
         cargarDeck();
         t.crearTablero(cartas);
-
+        
+        //hilo creado para la sustentación 2
+        if(m.getCf().getAyuda()){
+            hilo=new Hilo(this,t);
+            hilo.getThreadTablero().setDaemon(true);
+            hilo.getThreadTablero().start();
+        }
+        
+        
         //griton
         gt= new Griton(this,cartas);
         gt.aparecerCarta();
@@ -203,15 +211,16 @@ public class NuevoJuego {
     }
     
     private void generarReport(String info){
+        String duracion=String.valueOf(hilo.getDuracion()*2);
+        System.out.println(duracion);
         Report rx = null;
         if(m.getCf().get2CantOponentes()){
-            rx = new Report(nombre,info,"2",t.r.obtenerRegla());
+            rx = new Report(nombre,info,"2",t.r.obtenerRegla(),duracion+" s");
         }
         else{
-            rx = new Report(nombre,info,"1",t.r.obtenerRegla());
+            rx = new Report(nombre,info,"1",t.r.obtenerRegla(),duracion+ " s");
         }
         Report.reportes.add(rx);
-        System.out.println(rx);
     }
 
     public Menu getM() {

@@ -31,6 +31,7 @@ public class Configuracion {
     StackPane spConf= new StackPane();
     Boolean tableroVisible=true;
     Boolean cant2Oponentes=false;
+    Boolean ayuda=false;
     Menu m;
     tablero t;
     NuevoJuego nj;
@@ -38,8 +39,10 @@ public class Configuracion {
     BorderPane bpane;
     Label lbCant;
     Label lbVisible;
+    Label lbAyuda;
     RadioButton rbCant1, rbCant2;
     RadioButton rbVisible, rbOculto;
+    RadioButton rbAyudaSi,rbAyudaNo;
     Button confirmar;
 
     public BorderPane getBpane() {
@@ -59,15 +62,18 @@ public class Configuracion {
         //Labels
         lbCant=new Label("Cantidad de oponentes:     ");
         lbVisible= new Label("Cartas Oponentes:       ");
+        lbAyuda= new  Label ("Activar ayuda:        ");
         
         //Button
         ToggleGroup tgVisible = new ToggleGroup();
         ToggleGroup oponentes = new ToggleGroup();
-        
+        ToggleGroup ayuda= new ToggleGroup();
         rbCant1= new RadioButton("1 Oponente");
         rbCant2= new RadioButton("2 Oponentes");
         rbVisible=new RadioButton("Visible");
         rbOculto= new RadioButton("Oculto");
+        rbAyudaSi= new RadioButton("Si");
+        rbAyudaNo= new RadioButton("No");
         
         rbCant1.setToggleGroup(oponentes);
         rbCant2.setToggleGroup(oponentes);
@@ -76,6 +82,11 @@ public class Configuracion {
         rbVisible.setToggleGroup(tgVisible);
         rbOculto.setToggleGroup(tgVisible);
         rbVisible.setSelected(true);
+        
+        rbAyudaSi.setToggleGroup(ayuda);
+        rbAyudaNo.setToggleGroup(ayuda);
+        rbAyudaNo.setSelected(true);
+
         
         confirmar=new Button("Confirmar");
         confirmar.setOnAction(e-> regresarMenu());
@@ -90,10 +101,15 @@ public class Configuracion {
         GridPane.setConstraints(lbVisible,1,2 );
         GridPane.setConstraints(rbVisible,2,2 );
         GridPane.setConstraints(rbOculto, 3,2 );
+        GridPane.setConstraints(lbAyuda,1,3 );
+        GridPane.setConstraints(rbAyudaSi,2,3 );
+        GridPane.setConstraints(rbAyudaNo,3,3 );
+
         
         bpane.setCenter(gpane);
         bpane.setTop(vconf);
-        gpane.getChildren().addAll(lbCant,lbVisible,rbCant1,rbCant2,rbVisible,rbOculto);
+        gpane.setPadding(new Insets(20));
+        gpane.getChildren().addAll(lbCant,lbVisible,lbAyuda,rbCant1,rbCant2,rbVisible,rbOculto,rbAyudaSi,rbAyudaNo);
         Image fondo;
         try{
             fondo = new Image(new FileInputStream("src/images/configuracion.jpg"));
@@ -129,6 +145,9 @@ public class Configuracion {
         if(rbCant2.isSelected()){
             cant2Oponentes=true;
         }
+        if(rbAyudaSi.isSelected()){
+            ayuda=true;
+        }
         m.getStage().setScene(m.getScene());
     }
 
@@ -146,6 +165,10 @@ public class Configuracion {
 
     public StackPane getSpConf() {
         return spConf;
+    }
+
+    public Boolean getAyuda() {
+        return ayuda;
     }
 
     

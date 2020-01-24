@@ -25,12 +25,14 @@ public class Report {
     String oponentes;
     String regla;
     String date;
-
-    public Report(String nombre,String info, String oponentes, String regla) {
+    String duracion;
+    
+    public Report(String nombre,String info, String oponentes, String regla, String duracion) {
         this.nombre = nombre;
         this.ganador = info;
         this.oponentes = oponentes;
         this.regla = regla;
+        this.duracion=duracion;
         this.date = new Date().toString();
     }
 
@@ -80,6 +82,14 @@ public class Report {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(String duracion) {
+        this.duracion = duracion;
     }
     
     

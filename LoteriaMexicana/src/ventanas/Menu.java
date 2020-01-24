@@ -89,7 +89,7 @@ public class Menu {
             Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
 
         }
-        scene= new Scene(getSpMenu(),1000,900);
+        scene= new Scene(getSpMenu(),900,900);
 
     }
 

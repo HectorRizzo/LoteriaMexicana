@@ -18,19 +18,21 @@ public class Hilo {
     tablero tablero;
     boolean ejecutar= true;
     String info;
-
-    public Thread getThreadComputer1() {
-        return threadComputer1;
-    }
+    int duracion;
     
     public Hilo(NuevoJuego nj, tablero t,String info) {
         this.nj = nj;
         this.tablero=t;
         this.info = info;
     }
+
+    public Hilo(NuevoJuego nj, tablero tablero) {
+        this.nj = nj;
+        this.tablero = tablero;
+    }
     
         
-        Thread threadComputer1 = new Thread(new Runnable() {
+   Thread threadComputer1 = new Thread(new Runnable() {
             
             public void run() {
            
@@ -43,6 +45,44 @@ public class Hilo {
                         tablero.ComprobarCartaComputer(nj , tablero.getCartasComputer(),tablero.getImvComputer(),tablero.getSpComputer());
                         nj.ComprobarLoteria(tablero,nj.getR(),info);
                         
+                         }
+                    
+                };
+             
+                while (true) {
+                    try {
+                        duracion++;
+                        Thread.sleep(2000);
+                        
+                    synchronized (this) {
+                    while (nj.isEstadoJuego()) {
+                        Thread.interrupted();
+                        wait();
+                    }
+                        }
+                        
+                    } catch (InterruptedException ex) {
+                      }
+
+                    // UI update is run on the Application thread
+                    Platform.runLater(updater);
+                }
+            }  
+        });
+
+    
+    //Hilo Sustentacion 2
+    Thread threadTablero = new Thread(new Runnable() {
+            
+            public void run() {
+           
+                  
+                Runnable updater = new Runnable() {
+
+                    @Override
+                    public void run() {
+                        
+                        tablero.ComprobarCartaAyuda(nj , tablero.getCartasJugador(),tablero.getImvJugador(),tablero.getSpJugador());
                          }
                     
                 };
@@ -67,10 +107,22 @@ public class Hilo {
             }  
         });
 
+    public Thread getThreadTablero() {
+        return threadTablero;
+    }
+
+    public Thread getThreadComputer1() {
+        return threadComputer1;
+    }
+        
     public void setEjecutar(boolean ejecutar) {
         this.ejecutar = ejecutar;
     }
-        
+
+    public int getDuracion() {
+        return duracion;
+    }
+
     
     }
 

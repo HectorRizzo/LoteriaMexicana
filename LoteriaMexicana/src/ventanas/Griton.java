@@ -35,6 +35,8 @@ public class Griton {
     Set <Integer>gen= new HashSet();
     int primeraCarta= (int) (Math.random()*(52)+1);
     NuevoJuego nj;
+    String id;
+    ArrayList <String> registroID=new ArrayList();
     Thread thread = new Thread(new Runnable() {
 
             @Override
@@ -59,7 +61,6 @@ public class Griton {
             }
 
         });
-    String id;
     Griton() {
 
     }
@@ -96,6 +97,7 @@ public class Griton {
             }        
          }
         id=tm.get(rd).getId();
+        registroID.add(id);
         iv= new ImageView(tm.get(rd).getImg()); 
         
         Griton.getChildren().setAll(iv);
@@ -105,6 +107,11 @@ public class Griton {
     public Thread getThread() {
         return thread;
     }
+
+    public ArrayList<String> getRegistroID() {
+        return registroID;
+    }
+    
     
     
 }
