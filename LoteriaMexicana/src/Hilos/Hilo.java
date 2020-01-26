@@ -19,7 +19,7 @@ public class Hilo {
     boolean ejecutar= true;
     String info;
     int duracion;
-    
+    //Constructores
     public Hilo(NuevoJuego nj, tablero t,String info) {
         this.nj = nj;
         this.tablero=t;
@@ -31,7 +31,7 @@ public class Hilo {
         this.tablero = tablero;
     }
     
-        
+   //Hilo para la computadora
    Thread threadComputer1 = new Thread(new Runnable() {
             
             public void run() {
@@ -41,7 +41,7 @@ public class Hilo {
 
                     @Override
                     public void run() {
-                        
+                        //Comprueba la carta y comprueba si el tablero terminó la regla
                         tablero.ComprobarCartaComputer(nj , tablero.getCartasComputer(),tablero.getImvComputer(),tablero.getSpComputer());
                         nj.ComprobarLoteria(tablero,nj.getR(),info);
                         
@@ -81,7 +81,7 @@ public class Hilo {
 
                     @Override
                     public void run() {
-                        
+                        //Comprueba la carta ayuda en el tablero
                         tablero.ComprobarCartaAyuda(nj , tablero.getCartasJugador(),tablero.getImvJugador(),tablero.getSpJugador());
                          }
                     
@@ -107,6 +107,8 @@ public class Hilo {
             }  
         });
 
+    
+    //getters y setters
     public Thread getThreadTablero() {
         return threadTablero;
     }

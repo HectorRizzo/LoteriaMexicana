@@ -28,6 +28,7 @@ import javafx.scene.layout.VBox;
  * @author daymo
  */
 public class Configuracion {
+    //Panes, Botones,Labels
     StackPane spConf= new StackPane();
     Boolean tableroVisible=true;
     Boolean cant2Oponentes=false;
@@ -45,20 +46,13 @@ public class Configuracion {
     RadioButton rbAyudaSi,rbAyudaNo;
     Button confirmar;
 
-    public BorderPane getBpane() {
-        return bpane;
-    }
-
     public Configuracion(Menu m) {
         this.m=m;
         gpane= new GridPane();
         bpane= new BorderPane();
         VBox vconf= new VBox();
         HBox hbox = new HBox(); 
-         /*
-        HBox cant= new HBox();
-        HBox cant= new HBox();
-        */
+        
         //Labels
         lbCant=new Label("Cantidad de oponentes:     ");
         lbVisible= new Label("Cartas Oponentes:       ");
@@ -110,6 +104,7 @@ public class Configuracion {
         bpane.setTop(vconf);
         gpane.setPadding(new Insets(20));
         gpane.getChildren().addAll(lbCant,lbVisible,lbAyuda,rbCant1,rbCant2,rbVisible,rbOculto,rbAyudaSi,rbAyudaNo);
+        //carga la imagen de fondo
         Image fondo;
         try{
             fondo = new Image(new FileInputStream("src/images/configuracion.jpg"));
@@ -131,13 +126,11 @@ public class Configuracion {
         
         if(tgVisible.getSelectedToggle()==rbOculto){
             t.setVisible(false);
-            //nj.getComputerT().setVisible(false);
         }
-
-
-
         
     }
+    
+    
     private void regresarMenu() {
         if(rbOculto.isSelected()){
             tableroVisible=false;
@@ -150,7 +143,8 @@ public class Configuracion {
         }
         m.getStage().setScene(m.getScene());
     }
-
+    
+    //Getters
     public GridPane getGpane() {
         return gpane;
     }
@@ -170,6 +164,11 @@ public class Configuracion {
     public Boolean getAyuda() {
         return ayuda;
     }
+
+        public BorderPane getBpane() {
+        return bpane;
+    }
+
 
     
     

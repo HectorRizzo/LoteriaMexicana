@@ -37,6 +37,8 @@ public class Griton {
     NuevoJuego nj;
     String id;
     ArrayList <String> registroID=new ArrayList();
+    
+    //Hilo para el griton
     Thread thread = new Thread(new Runnable() {
 
             @Override
@@ -61,28 +63,18 @@ public class Griton {
             }
 
         });
+    
+    //Constructores
     Griton() {
 
     }
-
-    
-    public VBox getGriton() {
-        return Griton;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    
-    
-    public Griton(NuevoJuego nj,TreeMap<Integer, Carta> tm) {
+     public Griton(NuevoJuego nj,TreeMap<Integer, Carta> tm) {
         this.nj=nj;
         this.tm = tm;
         gen.add(primeraCarta);
     }
     
-    
+   //Comprueba si la carta ya ha aparecido y la muestra
     public void aparecerCarta(){
         
         boolean b= true;
@@ -112,6 +104,14 @@ public class Griton {
         return registroID;
     }
     
+      public VBox getGriton() {
+        return Griton;
+    }
+
+    public String getId() {
+        return id;
+    }
+
     
     
 }

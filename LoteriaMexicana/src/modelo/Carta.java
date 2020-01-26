@@ -16,11 +16,17 @@ public class Carta {
     Image img;
     String id;
     EstadoCarta estado;
-
+//Constructores
     public Carta(Image img, String id) {
         this.img= img;
         this.id = id;
     }
+       public Carta(Image img, String id, EstadoCarta estado) {
+        this.img = img;
+        this.id = id;
+        this.estado = estado;
+    }
+       //Setters y getters
 
     public void setImg(Image img) {
         this.img = img;
@@ -31,14 +37,6 @@ public class Carta {
     }
 
     public void setEstado(EstadoCarta estado) {
-        this.estado = estado;
-    }
-
-    
-    
-    public Carta(Image img, String id, EstadoCarta estado) {
-        this.img = img;
-        this.id = id;
         this.estado = estado;
     }
 

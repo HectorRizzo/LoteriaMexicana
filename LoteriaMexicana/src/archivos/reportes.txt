@@ -1,0 +1,5 @@
+juego1,2,Computador 1,cuatro_esquinas,25/1/2020at :23:14,104 s
+juego2,1,Jugador,cuatro_esquinas_juntas,25/1/2020at :23:23,92 s
+juego1,2,Computador 1,cuatro_esquinas,25/1/2020at :23:14,104 s
+juego2,1,Jugador,cuatro_esquinas_juntas,25/1/2020at :23:23,92 s
+dgfhjh,2,Jugador,cuatro_esquinas,25/1/2020at :23:47,74 s

@@ -32,28 +32,19 @@ public class Menu {
     Button btnConf,btnNuevo,btnReporte;
     Configuracion cf;
     NuevoJuego nj;
-    Reporte r;
+    Reporte r= new Reporte(this);
     Stage stage;
     Scene sceneConf;
     Scene sceneNJ;
     Scene scene;
     Scene sceneReporte;
     StackPane spMenu= new StackPane();
-    public Stage getStage() {
-        return stage;
-    }
-
-    public Scene getSceneNJ() {
-        return sceneNJ;
-    }
     
     
-
+//Constructores
     public Menu(Stage stage) {
         this.stage = stage;
     }
-    
-    
     public Menu(BorderPane bp, VBox vbmenu, Button btnConf, Button btnNuevo) {
         this.bp = bp;
         this.vbmenu = vbmenu;
@@ -61,6 +52,7 @@ public class Menu {
         this.btnNuevo = btnNuevo;
     }
     
+    //Inicia el menu con todos sus panes y botones
     public void IniciarMenu(){
         bp= new BorderPane();
         vbmenu= new VBox();
@@ -90,15 +82,7 @@ public class Menu {
 
         }
         scene= new Scene(getSpMenu(),900,900);
-
-    }
-
-    public Scene getScene() {
-        return scene;
-    }
-    
-    public BorderPane getBp() {
-        return bp;
+        r.cargarReporte(); //carga el archivo de juegos anteriores
     }
 
     private void IniciarConfiguracion() {
@@ -123,12 +107,9 @@ public class Menu {
     }
     
     private void IniciarReporte() {
-        Reporte r= new Reporte(this);
-        sceneReporte= new Scene(r.getBpane(),1000,900);
-        sceneReporte.getStylesheets().add("css/estilo.css");
-        sceneReporte.getStylesheets().add(getClass().getResource("").toExternalForm());
-        stage.setScene(sceneReporte);
-        System.out.println("this");
+        System.out.println("df");
+        r.ActualizarReporte();
+        stage.setScene(r.getSceneReporte());
     }
     
     private String pedirNombre(){
@@ -152,7 +133,20 @@ public class Menu {
         return spMenu;
     }
     
+    public Stage getStage() {
+        return stage;
+    }
+
+    public Scene getSceneNJ() {
+        return sceneNJ;
+    }
     
+      public Scene getScene() {
+        return scene;
+    }
     
+    public BorderPane getBp() {
+        return bp;
+    }
 
 }

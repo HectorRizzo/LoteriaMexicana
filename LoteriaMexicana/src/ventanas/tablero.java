@@ -42,23 +42,20 @@ public class tablero {
     ArrayList <Carta> cartasComputer=new ArrayList();
     ArrayList <StackPane> spComputer=new ArrayList();
     ArrayList <ImageView> imvComputer=new ArrayList();
-    
-        ArrayList <Carta> cartasJugador=new ArrayList();
-         ArrayList <StackPane> spJugador=new ArrayList();
+    //Para Jugador
+    ArrayList <Carta> cartasJugador=new ArrayList();
+    ArrayList <StackPane> spJugador=new ArrayList();
     ArrayList <ImageView> imvJugador=new ArrayList();
-    
+    //General
     ArrayList<Integer> columnas=new ArrayList();
     ArrayList <Integer> filas= new ArrayList();
 
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
-
+    
+//Constructores
     public tablero(NuevoJuego nj ,reglas r) {
         this.r = r;
         this.nj = nj;
     }
-    
     
     public tablero(String tipo,NuevoJuego nj, reglas r) {
         this.tipo=tipo;
@@ -66,39 +63,14 @@ public class tablero {
         this.r=r;
     }
 
-    public ArrayList<StackPane> getSpComputer() {
-        return spComputer;
-    }
 
-    public ArrayList<ImageView> getImvComputer() {
-        return imvComputer;
-    }
-    
-    
-    public GridPane getTablero() {
-        return tablero;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public ArrayList<Carta> getCartasComputer() {
-        return cartasComputer;
-    }
-
-    public ArrayList<Carta> getCartasJugador() {
-        return cartasJugador;
-    }
-
-    
     public void crearTablero(TreeMap cartas){
-        
         tablero= new GridPane();
         int rd=1;
         int lenX= 4;
         int lenY=4;
-        Set <Integer> contenedo= new HashSet();
+        Set <Integer> contenedo= new HashSet(); //Conjunto para comprobar si la carta ya apareció
+        //agrega cartas al tablero
         for(int i=1;i<=lenX;i++){
             for(int j=1; j<=lenY;j++){
                 boolean b=true;
@@ -113,94 +85,27 @@ public class tablero {
                         StackPane sp= new StackPane();
                         sp.getChildren().add(imv);
                         sp.setOnMouseClicked(e->ComprobarCarta(nj,c,imv,sp));
+                        //agrega al tablero y a los ArrayLists
                         tablero.add(sp, i, j);
                         cartasJugador.add(c);
                         imvJugador.add(imv);
                         spJugador.add(sp);
-                       
                     }else{
                         b=true;
                     }        
                 }
-                
-                
+   
             }
         }
     }
 
-    private void PonerBean(ImageView imgv,StackPane sp) {
-        
-        Image bean;
-        try {
-            bean = new Image(new FileInputStream("src/images/bean.png"));
-            ImageView frijol=new ImageView(bean);
-            frijol.setFitHeight(60);
-            frijol.setFitWidth(40);
-            sp.getChildren().clear();
-            sp.getChildren().addAll(imgv,frijol);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
-            
-        
-    }
-    //Sustentacion 2
-        private void PonerAlerta(ImageView imgv,StackPane sp) {
-        
-        Image alerta;
-        try {
-            alerta = new Image(new FileInputStream("src/images/ayuda.png"));
-            ImageView help=new ImageView(alerta);
-            help.setFitHeight(50);
-            help.setFitWidth(40);
-            
-            help.setTranslateX(26);
-            help.setTranslateY(-48);
-            sp.getChildren().clear();
-            sp.getChildren().addAll(imgv,help);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
-            
-        
-    }
-
-    
-    private void RegresarOriginal(ImageView imgv,StackPane sp){
-        sp.getChildren().clear();
-        sp.getChildren().add(imgv);
-        
-    }
-    private void PonerX(ImageView imgv,StackPane sp) {
-        
-            Image equis;
-        try {
-            equis = new Image(new FileInputStream("src/images/equis.png"));
-            ImageView ivequis=new ImageView(equis);
-            ivequis.setFitHeight(120);
-            ivequis.setFitWidth(100);
-            
-            sp.getChildren().clear();
-            sp.getChildren().addAll(imgv,ivequis);
-            
-            
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
-            
-        
-    }
-
+  
+    //Comprueba la carta del jugador 
     public void ComprobarCarta(NuevoJuego nj,Carta c,ImageView imv, StackPane sp) {
         //Tema sustentación 1
         if(nj.getGt().getRegistroID().contains(c.getId())){//si la carta si está en el arraylist
-            if(c.getEstado()==EstadoCarta.JUGADO){ 
-                
+            if(c.getEstado()==EstadoCarta.JUGADO){   
             }else{
-
                 if(this.getTipo().equals("computer")){
                 
                 }else{
@@ -220,7 +125,7 @@ public class tablero {
                 
             }else{   
             PonerX(imv,sp);
-            
+            //Hilo para poner la X por 1,5 segundos 
             Thread thread = new Thread(new Runnable() {
              
             @Override
@@ -251,11 +156,10 @@ public class tablero {
         });
             thread.setDaemon(true);
             thread.start();
-                System.out.println(volver);
                  }
         }
     }
-    
+    //Crea el tablero del jugador 
     public void crearTableroComputer(TreeMap cartas){
         System.out.println(nj.getM());
         visible=nj.getM().getCf().getTableroVisible();
@@ -274,6 +178,7 @@ public class tablero {
                         Carta c= (Carta) cartas.get(rd);
                         Carta c_pc= new Carta(c.getImg(),c.getId());
                         ImageView imv = null;
+                        //Comprueba la configuracion de visibilidad
                         if(visible){
                         imv=new ImageView(c_pc.getImg());
                         imv.setFitHeight(80);
@@ -305,14 +210,7 @@ public class tablero {
         }
     }
 
-    public ArrayList<Integer> getColumnas() {
-        return columnas;
-    }
-
-    public ArrayList<Integer> getFilas() {
-        return filas;
-    }
-
+    //Comprueba el tablero según la regla 
     public boolean comprobartablero(reglas r){
         boolean comp=false;
         int idregla=r.getIdRule();
@@ -321,6 +219,7 @@ public class tablero {
         
         int count=0;
         switch(idregla){
+            //Regla : columna
             case 1:
                 for(Integer i:columnas){
                     if(contadorFC.add(i)){
@@ -335,6 +234,7 @@ public class tablero {
                     }
                 }
             break;
+                //Regla fila
             case 2:
                 for(Integer i:filas){
                     if(contadorFC.add(i)){
@@ -349,6 +249,7 @@ public class tablero {
                     }
                 }
             break;
+                //Regla 4 esquinas 
             case 3:
                 int index=0;
                 for(Integer i: columnas){
@@ -366,12 +267,11 @@ public class tablero {
                     comp=true;
                 }
             break;
-                
+                //Regla cuatro esquinas juntas 
             case 4:
-                int verificador1=0,verificador2=0,verificador3=0,verificador4=0;
+                int verificador1=0,verificador2=0,verificador3=0,verificador4=0; // si alguna esquina está jugada y sus alrededores
                 int i=0;
-                for(Integer j: columnas){
-                    
+                for(Integer j: columnas){ //Para cada esquina comprueba la esquina y sus alrededores
                     if(j==1&& filas.get(i)==1){
                         int g= 0;
                         for(Integer h:columnas){    
@@ -430,7 +330,8 @@ public class tablero {
         }
         return comp;
     }
-
+    
+    //Comprueba la carta automaticamente de la computadora 
     public void ComprobarCartaComputer(NuevoJuego nj,ArrayList<Carta> cartas,ArrayList <ImageView> imvcomputer, ArrayList <StackPane> spcomputer) {
         int index=0;
         for(Carta c:cartas){
@@ -447,8 +348,8 @@ public class tablero {
             try {
             bean = new Image(new FileInputStream("src/deck/match.png"));
             ImageView frijol=new ImageView(bean);
-            frijol.setFitHeight(50);
-            frijol.setFitWidth(50);
+            frijol.setFitHeight(80);
+            frijol.setFitWidth(60);
             spcomputer.get(index).getChildren().clear();
             spcomputer.get(index).getChildren().addAll(imvcomputer.get(index),frijol);
         } catch (FileNotFoundException ex) {
@@ -472,7 +373,6 @@ public class tablero {
         }
     }
 
-    
     //tema 2 sustentacion
     public void ComprobarCartaAyuda(NuevoJuego nj,ArrayList<Carta> cartas,ArrayList <ImageView> imv, ArrayList <StackPane> sp) {
         int index=0;
@@ -499,6 +399,74 @@ public class tablero {
         }
     }
 
+      //Pone las imagenes al frente
+    private void PonerBean(ImageView imgv,StackPane sp) {
+        
+        Image bean;
+        try {
+            bean = new Image(new FileInputStream("src/images/bean.png"));
+            ImageView frijol=new ImageView(bean);
+            frijol.setFitHeight(60);
+            frijol.setFitWidth(40);
+            sp.getChildren().clear();
+            sp.getChildren().addAll(imgv,frijol);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            
+        
+    }
+    //Sustentacion 2
+    private void PonerAlerta(ImageView imgv,StackPane sp) {
+        
+        Image alerta;
+        try {
+            alerta = new Image(new FileInputStream("src/images/ayuda.png"));
+            ImageView help=new ImageView(alerta);
+            help.setFitHeight(50);
+            help.setFitWidth(40);
+            
+            help.setTranslateX(26);
+            help.setTranslateY(-48);
+            sp.getChildren().clear();
+            sp.getChildren().addAll(imgv,help);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            
+        
+    }
+        
+    private void RegresarOriginal(ImageView imgv,StackPane sp){
+        sp.getChildren().clear();
+        sp.getChildren().add(imgv);
+        
+    }
+    private void PonerX(ImageView imgv,StackPane sp) {
+        
+            Image equis;
+        try {
+            equis = new Image(new FileInputStream("src/images/equis.png"));
+            ImageView ivequis=new ImageView(equis);
+            ivequis.setFitHeight(120);
+            ivequis.setFitWidth(100);
+            
+            sp.getChildren().clear();
+            sp.getChildren().addAll(imgv,ivequis);
+            
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            
+        
+    }
+
+    
+    //Getters
     public ArrayList<StackPane> getSpJugador() {
         return spJugador;
     }
@@ -506,7 +474,42 @@ public class tablero {
     public ArrayList<ImageView> getImvJugador() {
         return imvJugador;
     }
+    
+        public ArrayList<StackPane> getSpComputer() {
+        return spComputer;
+    }
 
+    public ArrayList<ImageView> getImvComputer() {
+        return imvComputer;
+    }
+    
+    public GridPane getTablero() {
+        return tablero;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public ArrayList<Carta> getCartasComputer() {
+        return cartasComputer;
+    }
+
+    public ArrayList<Carta> getCartasJugador() {
+        return cartasJugador;
+    }
+    
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+    
+    public ArrayList<Integer> getColumnas() {
+        return columnas;
+    }
+
+    public ArrayList<Integer> getFilas() {
+        return filas;
+    }
 
 
 }

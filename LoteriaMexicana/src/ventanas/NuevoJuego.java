@@ -42,8 +42,8 @@ public class NuevoJuego {
     tablero computerT; //tablero del oponente
     tablero oponente2;
     reglas r; // nos dice la formacion a completar
-    Griton gt; 
-    Menu m;
+    Griton gt; //objeto griton
+    Menu m; //objeto menu
     VBox vbright= new VBox(); //lena la parte derecha del tablero
     VBox vbleft= new VBox(); //llena la parte izquierda del tablero
     StackPane sploteria= new StackPane(); //layout para la imagen loteria
@@ -54,37 +54,7 @@ public class NuevoJuego {
     String ruta="src/images/deck";
     String nombre;
 
-    
-    public tablero getComputerT() {
-        return computerT;
-    }
-
-    public reglas getR() {
-        return r;
-    }
-    
-    
-    public tablero getT() {
-        return t;
-    }
-
-    public Griton getGt() {
-        return gt;
-    }
-
-    public ArrayList<Image> getImagenes() {
-        return imagenes;
-    }
-
-    public String getRuta() {
-        return ruta;
-    }
-    
-    public BorderPane getBpNuevoJuego() {
-           
-        return bpNuevoJuego;
-    }
-    
+    //constructor
     public NuevoJuego(Menu m,String nombre) { 
         this.m=m;
         //inicializa los hilos, los tableros y la imagen loteria
@@ -117,6 +87,7 @@ public class NuevoJuego {
         hilo= new Hilo(this,computerT,"Computador 1");
         hilo.getThreadComputer1().setDaemon(true);
         hilo.getThreadComputer1().start();
+        //si son 2 oponentes
         if(m.getCf().get2CantOponentes()){
             oponente2=new tablero("computer",this,r);
             oponente2.crearTableroComputer(cartas);
@@ -127,8 +98,6 @@ public class NuevoJuego {
 
         }else{
             vbright.getChildren().addAll(gt.getGriton(),sploteria);
-            
-
         }
         
         //agrega los elementos a su pane respectivo
@@ -151,6 +120,7 @@ public class NuevoJuego {
         }
         
     }
+    //carga la imagen Loteria
     public void cargarLoteria(){
         Image lot;
         try {
@@ -167,14 +137,7 @@ public class NuevoJuego {
         }
     }
 
-    public boolean isEstadoJuego() {
-        return estadoJuego;
-    }
-
-    public TreeMap<Integer, Carta> getCartas() {
-        return cartas;
-    }
-    
+    //carga el deck de imagenes
     public void cargarDeck(){
         
         try {
@@ -198,6 +161,7 @@ public class NuevoJuego {
         }
     }
 
+    //comprueba si se completó el juego
     public void ComprobarLoteria(tablero t, reglas r,String info) {
        
         if(t.comprobartablero(r)){
@@ -210,6 +174,7 @@ public class NuevoJuego {
         }   
     }
     
+    //genera el reporte del juego
     private void generarReport(String info){
         String duracion=String.valueOf(hilo.getDuracion()*2);
         System.out.println(duracion);
@@ -220,21 +185,62 @@ public class NuevoJuego {
         else{
             rx = new Report(nombre,info,"1",t.r.obtenerRegla(),duracion+ " s");
         }
-        Report.reportes.add(rx);
-    }
-
-    public Menu getM() {
-        return m;
+        m.getR().getListReportes().add(rx);
+        m.getR().AgregarReporte();
     }
     
     private void regresarMenu() {
         m.getStage().setScene(m.getScene());
     }
 
+    //getters
+    public Menu getM() {
+        return m;
+    }
+    
+    
     public StackPane getSpJuego() {
         return spJuego;
     }
     
+    public boolean isEstadoJuego() {
+        return estadoJuego;
+    }
+
+    public TreeMap<Integer, Carta> getCartas() {
+        return cartas;
+    }
+    
+    
+    public tablero getComputerT() {
+        return computerT;
+    }
+
+    public reglas getR() {
+        return r;
+    }
+    
+    
+    public tablero getT() {
+        return t;
+    }
+
+    public Griton getGt() {
+        return gt;
+    }
+
+    public ArrayList<Image> getImagenes() {
+        return imagenes;
+    }
+
+    public String getRuta() {
+        return ruta;
+    }
+    
+    public BorderPane getBpNuevoJuego() {
+           
+        return bpNuevoJuego;
+    }
     
     
     

@@ -21,39 +21,21 @@ import javafx.scene.layout.VBox;
  */
 public class reglas {
 
-    public TreeMap<Integer, String> getDicRules() {
-        return dicRules;
-    }
-
-    public VBox getVbreglas() {
-        return vbreglas;
-    }
-    
-
-    public reglas() {
-    }
-    
-    
     TreeMap <Integer,String> dicRules=new TreeMap<Integer,String>();
     VBox vbreglas= new VBox();
     ImageView ivrul;
     Integer idRule=1;
-    public ImageView getIvrul() {
-        return ivrul;
-    }
-
-    public Integer getIdRule() {
-        return idRule;
-    }
-
+  
+    //carga la seccion de las reglas 
     public void cargarRegla(){
+        //Conjunto de reglas
         dicRules.put(1, "columna");
         dicRules.put(2,"fila");
         dicRules.put(3, "cuatro_esquinas");
         dicRules.put(4, "cuatro_esquinas_juntas");
 
+        //Carga la imagen de la regla
         Image rul;
-        
         idRule = (int)(Math.random()*(4)+1);
         try {
             rul = new Image(new FileInputStream("src/images/"+dicRules.get(idRule)+".jpeg"));
@@ -66,18 +48,32 @@ public class reglas {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(tablero.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
-    private void LoteriaClicked() {
-    }
-    public void formacion(){
-        
-    }
-    
+    //Getters
     public String obtenerRegla(){
         return dicRules.get(idRule);
     }
 
+      public ImageView getIvrul() {
+        return ivrul;
+    }
+
+    public Integer getIdRule() {
+        return idRule;
+    }
+
+    public TreeMap<Integer, String> getDicRules() {
+        return dicRules;
+    }
+
+    public VBox getVbreglas() {
+        return vbreglas;
+    }
+    
+
+    public reglas() {
+    }
+    
     
 }
